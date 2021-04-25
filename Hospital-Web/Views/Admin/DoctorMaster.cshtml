@@ -1,0 +1,90 @@
+﻿ 
+@{
+    ViewBag.Title = "Admin Profile";
+    Layout = "~/Views/Shared/Admin/_Layout.cshtml";
+    <script src="~/assets/admin/PageWiseJs/doctormaster.js"></script>
+}
+
+<script>
+    $(document).ready(function () {
+        hpldm.doctorMasterOnLoad();
+    });
+</script>
+
+<div id="page-wrapper" class="gray-bg dashbard-1">
+    <div class="content-main">
+        <!--banner-->
+        <div class="banner">
+            <h2>
+                <a href="/home/dashboard">Home</a>
+                <i class="fa fa-angle-right"></i>
+                <span>Create Doctors</span>
+            </h2>
+        </div>
+        <!--//banner-->
+        <!--content-->
+        <div class="blank">
+            <div class="blank-page">
+                @using (Html.BeginForm("managedoctormaster", "admin", FormMethod.Post, new { enctype = "multipart/form-data", @id = "manage-doctor-form" }))
+                {
+                    <div class="col-lg-12"><p style="color:#ef0f44;text-align:center">@ViewBag.Msg</p></div>
+                    <div class="clearfix"></div>
+                    <input type="hidden" name="DoctorId" id="DoctorId" value="0" />
+                    <div class="col-md-4 form-group">
+                        Select Hospital :
+                        <select id="HospitalList" name="HospitalList" required class="form-control">
+                            <option value="0">Select Type</option>
+                            <option value="1">Dev Sawroop</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        Select Department :
+                        <select id="DepartmentList" name="DepartmentList" required class="form-control">
+                            <option value="0">Select Type</option>
+                            <option value="1">Cardio</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        Doctor Name :
+                        <input type="text" name="DoctorName" id="DoctorName" class="form-control" placeholder="Enter Doctor Name" required />
+                    </div>
+                    <div class="col-md-4 form-group">
+                        Contact Number :
+                        <input type="number" name="ContactNumber" id="ContactNumber" class="form-control" placeholder="Enter Contact Number" required />
+                    </div>
+                    <div class="col-md-8 form-group">
+                        Full Address :
+                        <input type="text" name="HospitalAddress" id="HospitalAddress" class="form-control" placeholder="Enter Hospital Address" required />
+                    </div>
+                    <div class="col-md-4 form-group">
+                        Email Id :
+                        <input type="email" name="EmailId" id="EmailId" class="form-control" placeholder="Enter Email Id" required />
+                    </div>
+                    <div class="col-md-4 form-group">
+                        Website Name :
+                        <input type="text" name="WebsiteName" id="WebsiteName" class="form-control" placeholder="Enter Website Name" />
+                    </div>
+                    <div class="col-md-4 form-group">
+                        Commission :
+                        <input type="number" name="Commission" id="Commission" class="form-control" placeholder="Enter Commission" />
+                    </div>
+                    <div class="col-md-8 form-group">
+                        Description :
+                        <textarea name="Description" id="Description" rows="4" cols="20" class="form-control" placeholder="Enter Description"></textarea>
+                    </div>
+                    <div class="col-lg-4 form-group">
+                        <br />
+                        <button type="submit" name="btnSubmit" id="btnSubmit" class="btn btn-primary">Submit</button>
+                    </div>
+                }
+            </div>
+            <div class="blank-page">
+                <div id="doctorMasterList"></div>
+            </div>
+        </div>
+        <!--//content-->
+        <!---->
+    </div>
+    <div class="clearfix"> </div>
+</div>
+

@@ -1,0 +1,84 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+    <link href="~/assets/admin/css/bootstrap.min.css" rel='stylesheet' type='text/css' />
+    <!-- Custom Theme files -->
+    <link href="~/assets/admin/css/style.css" rel='stylesheet' type='text/css' />
+    <link href="~/assets/admin/css/font-awesome.css" rel="stylesheet">
+    <script src="~/assets/admin/js/jquery.min.js"></script>
+
+
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Select2 JS -->
+    <script src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+
+    <!--Select to script-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" />
+    <!--Select to script end-->
+    <!--JsGrid Files -->
+    <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
+    <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>
+    <!--JsGrid Files End -->
+    <script src="~/assets/admin/js/jquery.metisMenu.js"></script>
+    <!-- Custom and plugin javascript -->
+    <link href="~/assets/admin/css/custom.css" rel="stylesheet">
+    <script src="~/assets/admin/js/custom.js"></script>
+    <script src="~/assets/admin/js/screenfull.js"></script>
+    <script src="~/assets/admin/js/jquery.nicescroll.js"></script>
+    <link href="https://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" rel="stylesheet" />
+    <script>
+        $(function () {
+            $("#datepicker").datepicker().datepicker("setDate", new Date());
+            $("#datepicker1").datepicker().datepicker("setDate", new Date());
+        });
+    </script>
+    <!--//for item select-->
+    <script>
+        $(document).ready(function () {
+            $('.itemselect').select2();
+        });
+    </script>
+
+    <script>
+        $(function () {
+            $('#supported').text('Supported/allowed: ' + !!screenfull.enabled);
+
+            if (!screenfull.enabled) {
+                return false;
+            }
+            $('#toggle').click(function () {
+                screenfull.toggle($('#container')[0]);
+            });
+        });
+    </script>
+</head>
+<body class="body">
+    <div id="wrapper">
+        <header id="header">
+            @Html.Partial("~/Views/Shared/Admin/_Header.cshtml")
+        </header>
+        @RenderSection("featured", required: false)
+        <section>
+            @RenderBody()
+        </section>
+        <footer id="footer">
+            @Html.Partial("~/Views/Shared/Admin/_Footer.cshtml")
+        </footer>
+    </div>
+    <!--scrolling js-->
+    <script src="~/assets/admin/js/scripts.js"></script>
+    <!--//scrolling js-->
+    <script src="~/assets/admin/js/bootstrap.min.js"></script>
+    <!--Common Files -->
+    <script src="~/assets/common.js"></script>
+    <!--Common Files END -->
+</body>
+</html>
