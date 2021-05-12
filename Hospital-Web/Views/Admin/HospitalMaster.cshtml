@@ -2,12 +2,11 @@
 @{
     ViewBag.Title = "Admin Profile";
     Layout = "~/Views/Shared/Admin/_Layout.cshtml";
-    <script src="~/assets/admin/PageWiseJs/hospitalmaster.js"></script>
 }
 
 <script>
     $(document).ready(function () {
-        hplhm.hospitalMasterOnLoad();
+        hplm.hospitalMasterOnLoad();
     });
 </script>
 
@@ -34,7 +33,7 @@
                         Type :
                         <select id="Type" name="Type" required class="form-control">
                             <option value="0">Select Type</option>
-                            <option value="1">Hospital and Pathlab</option>
+                            <option value="1">Hospital & Pathlab</option>
                             <option value="2">Hospital</option>
                             <option value="3">Pathlab</option>
                         </select>

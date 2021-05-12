@@ -1,0 +1,54 @@
+﻿@{
+    ViewBag.Title = "Admin Profile";
+    Layout = "~/Views/Shared/Admin/_Layout.cshtml";
+}
+<script src="~/assets/admin/PageWiseJs/appointment.js"></script>
+<script>
+    $(document).ready(function () {
+        hplappointment.appointmentOnLoad();
+    });
+</script>
+
+<div id="page-wrapper" class="gray-bg dashbard-1">
+    <div class="content-main">
+        <!--banner-->
+        <div class="banner">
+            <h2>
+                <a href="/home/dashboard">Home</a>
+                <i class="fa fa-angle-right"></i>
+                <span>Appointment Lists</span>
+            </h2>
+        </div>
+        <!--//banner-->
+        <div class="modal fade" id="AppointmentModal" tabhome="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            Make An Appointment
+                        </h4>
+                    </div>
+                    <div class="modal-body packages">
+                        <div class="appointment-form">
+                            @Html.Partial("~/Views/Admin/_OPDAppointment.cshtml")
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--content-->
+        <div class="blank">
+            <div class="blank-page">
+                <div id="appointmentList"></div>
+            </div>
+        </div>
+        <!--//content-->
+        <!---->
+    </div>
+    <div class="clearfix"> </div>
+</div>
+

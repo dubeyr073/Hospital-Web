@@ -75,5 +75,40 @@ namespace Hospital_Web.Controllers
         {
             return View("~/Views/Home/contact.cshtml");
         }
+        [HttpPost]
+        public JsonResult PatientAppointment()
+        {
+            string result = "Fail";
+            DataTable status = new DataTable();
+            try
+            {
+                List<SqlParameter> SqlParameters = new List<SqlParameter>();
+                SqlParameters.Add(new SqlParameter("@Action", "insertappointment"));
+                SqlParameters.Add(new SqlParameter("@AppointmentNumber", Request.Form["contactnumber"])); ;
+                SqlParameters.Add(new SqlParameter("@Name", Request.Form["name"]));
+                SqlParameters.Add(new SqlParameter("@Age", Request.Form["age"]));
+                SqlParameters.Add(new SqlParameter("@Address", Request.Form["address"]));
+                SqlParameters.Add(new SqlParameter("@ContactNumber", Request.Form["contactnumber"]));
+                SqlParameters.Add(new SqlParameter("@EmailId", Request.Form["email"]));
+                SqlParameters.Add(new SqlParameter("@AppointmentDate", Request.Form["appointmentdate"]));
+                SqlParameters.Add(new SqlParameter("@AppointmentTime", Request.Form["appointmenttime"]));
+                SqlParameters.Add(new SqlParameter("@Description", Request.Form["description"]));
+                status = DBManager.ExecuteDataTableWithParamiter("ManagePatientAppointment", CommandType.StoredProcedure, SqlParameters);
+
+                if (status.Rows.Count > 0)
+                {
+                    result = "Success";
+                }
+                else
+                {
+                    ViewBag.Msg = "username and password is wrong..!";
+                }
+            }
+            catch (Exception)
+            {
+                ViewBag.Msg = "some error occurred, please try again..!";
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
     }
 }

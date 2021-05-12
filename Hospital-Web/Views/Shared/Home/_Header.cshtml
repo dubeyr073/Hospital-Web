@@ -123,12 +123,12 @@
                             </li>
 
                             <li class="nav-item">
-                                <a href="#download" class="free-con btn btn-style btn-secondary d-block"
-                                   data-toggle="modal" data-target="#myModal">Free Appointment</a>
+                                <a href="#AppointmentModal" class="free-con btn btn-style btn-secondary d-block"
+                                   data-toggle="modal" data-target="#AppointmentModal">Free Appointment</a>
 
                                 <!-- //modal-popup-->
                                 <div class="selectpackage">
-                                    <div class="modal fade" id="myModal" tabhome="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+                                    <div class="modal fade" id="AppointmentModal" tabhome="-1" role="dialog" aria-labelledby="myLargeModalLabel"
                                          aria-hidden="true">
                                         <div class="modal-dialog modal-lg">
                                             <div class="modal-content">
@@ -142,71 +142,103 @@
                                                 </div>
                                                 <div class="modal-body packages">
                                                     <div class="appointment-form">
-                                                        <form action="#" method="post">
+                                                        <form id="PatientAppointform" novalidate="novalidate" method="post">
                                                             <div class="fields-grid">
                                                                 <div class="styled-input">
-
                                                                     <div class="appointment-form-field">
-
-                                                                        <input type="text" name="fullname" placeholder="Full Name" required="">
+                                                                        <input type="text" id="name" name="name" placeholder="Full Name" required="" />
                                                                     </div>
                                                                 </div>
                                                                 <div class="styled-input">
-
                                                                     <div class="appointment-form-field">
-
-                                                                        <input type="text" name="phone" placeholder="Enter Number" required="">
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="styled-input">
-
-                                                                    <div class="appointment-form-field">
-
-                                                                        <input type="date" name="age" placeholder="Enter Your Age" required="">
+                                                                        <input type="text" id="age" name="age" placeholder="Enter Your Age" required="" />
                                                                     </div>
                                                                 </div>
                                                                 <div class="styled-input">
-
                                                                     <div class="appointment-form-field">
-
-                                                                        <input type="date" name="date" placeholder="Set a Date" required="">
+                                                                        <input type="text" id="contactnumber" name="contactnumber" placeholder="Enter Number" required="" />
                                                                     </div>
                                                                 </div>
                                                                 <div class="styled-input">
-
                                                                     <div class="appointment-form-field">
-
-                                                                        <select id="department" required="">
-                                                                            <option value="">Specialization*</option>
-                                                                            <option value="">Cardiology</option>
-                                                                            <option value="">Heart Surgery</option>
-                                                                            <option value="">Skin Care</option>
-                                                                            <option value="">Body Check-up</option>
-                                                                            <option value="">Numerology</option>
-                                                                            <option value="">Diagnosis</option>
-                                                                            <option value="">Others</option>
+                                                                        <input type="email" id="email" name="email" placeholder="Enter email id" />
+                                                                    </div>
+                                                                </div>
+                                                                <div class="styled-input">
+                                                                    <div class="appointment-form-field">
+                                                                        <input type="date" id="appointmentdate" name="appointmentdate" placeholder="Set a Date" required="" />
+                                                                    </div>
+                                                                </div>
+                                                                <div class="styled-input">
+                                                                    <div class="appointment-form-field">
+                                                                        <select name="appointmenttime" id="appointmenttime" required="">
+                                                                            <option value="">Select Time</option>
+                                                                            <option value="00:00">12.00 AM</option>
+                                                                            <option value="00:30">12.30 AM</option>
+                                                                            <option value="01:00">01.00 AM</option>
+                                                                            <option value="01:30">01.30 AM</option>
+                                                                            <option value="02:00">02.00 AM</option>
+                                                                            <option value="02:30">02.30 AM</option>
+                                                                            <option value="03:00">03.00 AM</option>
+                                                                            <option value="03:30">03.30 AM</option>
+                                                                            <option value="04:00">04.00 AM</option>
+                                                                            <option value="04:30">04.30 AM</option>
+                                                                            <option value="05:00">05.00 AM</option>
+                                                                            <option value="05:30">05.30 AM</option>
+                                                                            <option value="06:00">06.00 AM</option>
+                                                                            <option value="06:30">06.30 AM</option>
+                                                                            <option value="07:00">07.00 AM</option>
+                                                                            <option value="07:30">07.30 AM</option>
+                                                                            <option value="08:00">08.00 AM</option>
+                                                                            <option value="08:30">08.30 AM</option>
+                                                                            <option value="09:00">09.00 AM</option>
+                                                                            <option value="09:30">09.30 AM</option>
+                                                                            <option value="10:00">10.00 AM</option>
+                                                                            <option value="10:30">10.30 AM</option>
+                                                                            <option value="11:00">11.00 AM</option>
+                                                                            <option value="11:30">11.30 AM</option>
+                                                                            <option value="12:00">12.00 PM</option>
+                                                                            <option value="12:30">12.30 PM</option>
+                                                                            <option value="13:00">01.00 PM</option>
+                                                                            <option value="13:30">01.30 PM</option>
+                                                                            <option value="14:00">02.00 PM</option>
+                                                                            <option value="14:30">02.30 PM</option>
+                                                                            <option value="15:00">03.00 PM</option>
+                                                                            <option value="15:30">03.30 PM</option>
+                                                                            <option value="16:00">04.00 PM</option>
+                                                                            <option value="16:30">04.30 PM</option>
+                                                                            <option value="17:00">05.00 PM</option>
+                                                                            <option value="17:30">05.30 PM</option>
+                                                                            <option value="18:00">06.00 PM</option>
+                                                                            <option value="18:30">06.30 PM</option>
+                                                                            @*<option value="19:00" selected="">07.00 PM</option>
+                                                                                <option value="19:30">07.30 PM</option>
+                                                                                <option value="20:00">08.00 PM</option>
+                                                                                <option value="20:30">08.30 PM</option>
+                                                                                <option value="21:00">09.00 PM</option>
+                                                                                <option value="21:30">09.30 PM</option>
+                                                                                <option value="22:00">10.00 PM</option>
+                                                                                <option value="22:30">10.30 PM</option>
+                                                                                <option value="23:00">11.00 PM</option>
+                                                                                <option value="23:30">11.30 PM</option>*@
                                                                         </select>
                                                                     </div>
                                                                 </div>
+
                                                                 <div class="styled-input">
                                                                     <div class="appointment-form-field">
-                                                                        <select id="doctor" required="">
-                                                                            <option value="">Select Doctor</option>
-                                                                            <option value="">Doctor 1</option>
-                                                                            <option value="">Doctor 2</option>
-                                                                            <option value="">Doctor 3</option>
-                                                                            <option value="">Doctor 4</option>
-                                                                            <option value="">Doctor 5</option>
-                                                                            <option value="">Doctor 6</option>
-                                                                            <option value="">Doctor 7</option>
-                                                                        </select>
+                                                                        <textarea name="address" id="Address" rows="4" cols="20" class="form-control" placeholder="Enter Address"></textarea>
                                                                     </div>
                                                                 </div>
-
+                                                                <div class="styled-input">
+                                                                    <div class="appointment-form-field">
+                                                                        <textarea name="description" id="description" rows="4" cols="20" class="form-control" placeholder="Enter Patient Description"></textarea>
+                                                                    </div>
+                                                                </div>
                                                             </div>
+                                                            <div class="col-lg-12"><p style="color:#ef0f44;text-align:center" id="appointmentstatusmsg"></p></div>
                                                             <div class="appointment-btn text-lg-right">
-                                                                <button type="submit" class="btn btn-style btn-primary mt-4">Book Appointment</button>
+                                                                <button id="SubmitAppointment" type="submit" class="btn btn-style btn-primary mt-4">Book Appointment</button>
                                                             </div>
                                                         </form>
                                                     </div>
