@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Hospital_Web.Models.Admin;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -133,6 +134,67 @@ namespace Hospital_Web.Controllers
                 ViewBag.Msg = "some error occurred, please try again..!";
             }
             return View("~/Views/Admin/DoctorMaster.cshtml", dt);
+        }
+
+        public ActionResult TestMaster()
+        {
+            ViewBag.Msg = "";
+            ViewBag.TestId = 0;
+            return View("~/Views/Admin/TestMaster.cshtml");
+        }
+        public ActionResult ManageTestMaster()
+        {
+            TestMaster ObjTestMaster = new TestMaster();
+            if (Convert.ToInt32(Request.Form["TestId"]) == 0)
+            {
+                ObjTestMaster.TestName = Convert.ToString(Request.Form["TestName"]);
+                ObjTestMaster.Charge = Convert.ToInt32(Request.Form["Charge"]);
+                ObjTestMaster.IsDiscriptive = Convert.ToInt32(Request.Form["IsDescription"]);
+                ObjTestMaster.Description = Convert.ToString(Request.Form["Description"]);
+                if (ObjTestMaster.SaveRecord())
+                {
+                    ViewBag.Msg = "Record Saved";
+                    ViewBag.TestId = ObjTestMaster.TestID; ;
+                    Session.Add("ObjTestMaster", ObjTestMaster);
+                }
+                {
+                    ViewBag.Msg = "Record Not Saved";
+                    ViewBag.TestId = 0;
+                }
+                ViewBag.ObjTestMaster = ObjTestMaster;
+            }
+            return View("~/Views/Admin/TestMaster.cshtml");
+        }
+
+        public ActionResult ManageTestMasterDetail()
+        {
+            TestMaster ObjTestMaster = new TestMaster();
+            if (Session["ObjTestMaster"] != null)
+            {               
+                ViewBag.TestId = ObjTestMaster.TestID; ;
+                ObjTestMaster = (TestMaster)Session["ObjTestMaster"];
+            }
+            else
+            {
+                ViewBag.Msg = "Error in process ......";
+                return View("~/Views/Admin/TestMaster.cshtml");
+            }
+            TestMasterDetail ObjTestMasterDetail = new TestMasterDetail();
+            ObjTestMasterDetail.TestMasterID = ObjTestMaster.TestID;
+            ObjTestMasterDetail.HeadName = Convert.ToString(Request.Form["HeadName"]);
+            ObjTestMasterDetail.FieldName = Convert.ToString(Request.Form["FieldName"]);
+            ObjTestMasterDetail.FieldDefaultValue = Convert.ToString(Request.Form["FieldDefaultValue"]);
+            ObjTestMasterDetail.Unit = Convert.ToString(Request.Form["Unit"]);
+            ObjTestMasterDetail.TestDetailID = ObjTestMasterDetail.TestMasterDetail_SaveRecord();
+            if (ObjTestMasterDetail.TestDetailID > 0)
+            {
+                ObjTestMaster.ObjTestMasterDetail.Add(ObjTestMasterDetail);
+                ViewBag.Msg = "Record Added";
+                ViewBag.TestId = ObjTestMaster.TestID; ;
+                Session.Add("ObjTestMaster", ObjTestMaster);
+            }
+            ViewBag.ObjTestMaster = ObjTestMaster;
+            return View("~/Views/Admin/TestMaster.cshtml");
         }
     }
 }

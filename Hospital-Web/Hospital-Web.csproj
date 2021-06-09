@@ -92,6 +92,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="assets\admin\PageWiseJs\doctormaster.js" />
+    <Content Include="assets\admin\PageWiseJs\TestMaster.js" />
     <Content Include="assets\common.js" />
     <Content Include="assets\admin\css\bootstrap.min.css" />
     <Content Include="assets\admin\css\custom.css" />
@@ -147,6 +148,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Admin\TestMaster.cs" />
     <Compile Include="Models\CBL\DBManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -179,6 +181,7 @@
     <Content Include="Views\Admin\DashBoard.cshtml" />
     <Content Include="Views\Admin\HospitalMaster.cshtml" />
     <Content Include="Views\Admin\DoctorMaster.cshtml" />
+    <Content Include="Views\Admin\TestMaster.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
