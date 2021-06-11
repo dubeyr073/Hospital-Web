@@ -14,14 +14,8 @@
 
     <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <!-- Select2 JS -->
-    <script src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
-
-    <!--Select to script-->
+    <script src="~/assets/admin/PageWiseJs/masterpages.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" />
-    <!--Select to script end-->
     <!--JsGrid Files -->
     <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
     <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
@@ -34,19 +28,6 @@
     <script src="~/assets/admin/js/screenfull.js"></script>
     <script src="~/assets/admin/js/jquery.nicescroll.js"></script>
     <link href="https://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" rel="stylesheet" />
-    <script>
-        $(function () {
-            $("#datepicker").datepicker().datepicker("setDate", new Date());
-            $("#datepicker1").datepicker().datepicker("setDate", new Date());
-        });
-    </script>
-    <!--//for item select-->
-    <script>
-        $(document).ready(function () {
-            $('.itemselect').select2();
-        });
-    </script>
-
     <script>
         $(function () {
             $('#supported').text('Supported/allowed: ' + !!screenfull.enabled);

@@ -35,6 +35,21 @@ var hpls = (function (scope) {
             }
         });
     };
+    scope.PatientAppointment = function () {
+        $("#responsemsg", "#PatientAppointform").html("");
+        var url = "/home/patientappointment";
+        var data = $("#PatientAppointform").serialize();
+        hplc.ajaxCall("POST", url, data, "text", function (d) {
+            var jsonResponse = JSON.parse(d);
+            if (jsonResponse == "Fail") {
+                $("#appointmentstatusmsg").text("Technical error please try after some time..!");
+            }
+            else {
+                $("#PatientAppointform").val("");
+                $("#appointmentstatusmsg").text("Appointment Registered Sucessfully..!");
+            }
+        });
+    };
 
     return scope;
 
@@ -53,6 +68,14 @@ $(function () {
         }
     });
 
+    $("#PatientAppointform").validate({
+        submitHandler: function () { hpls.PatientAppointment() },
+        rules: {
+        },
+        messages: {
+        }
+    });
+
     $('#loginModal').on('show.bs.modal', function () {
         $("input", ".modal").removeClass('error');
         $("#responsemsg", ".modal").html("");
@@ -62,6 +85,17 @@ $(function () {
         $(this).find("form").validate().resetForm();
         $(this).find("form .refresh").click();
         $("#msg").text("");
+        $("#appointmentstatusmsg").text("");     
+    });
+    $('#AppointmentModal').on('show.bs.modal', function () {
+        $("input", ".modal").removeClass('error');
+        $("#responsemsg", ".modal").html("");
+        $(".error", ".modal").html("");
+
+        $(this).find("form").trigger('reset');
+        $(this).find("form").validate().resetForm();
+        $(this).find("form .refresh").click();
+        $("#appointmentstatusmsg").text("");
     });
 
 });

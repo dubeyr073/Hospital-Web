@@ -13,7 +13,12 @@ ul, ol {
     margin: 0;
     padding: 0;
 }
-
+.jsgrid-row > jsgrid-alt-row {
+    font-size: 12px;
+}
+.jsgrid-cell {
+    font-size: 12px;
+}
 p {
     margin: 0;
 }
@@ -445,7 +450,7 @@ nav.navbar.navbar-static-top {
 }
 
 .navbar-left-right input[type="submit"] {
-    background: url(../../images/DashBoard/search.png) 0px 2px no-repeat;
+    background: url(../../admin/images/search.png) 0px 2px no-repeat;
     width: 16px;
     height: 16px;
     border: none;

@@ -91,6 +91,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="assets\admin\PageWiseJs\appointment.js" />
+    <Content Include="assets\admin\PageWiseJs\masterpages.js" />
     <Content Include="assets\admin\PageWiseJs\doctormaster.js" />
     <Content Include="assets\admin\PageWiseJs\TestMaster.js" />
     <Content Include="assets\common.js" />
@@ -107,7 +109,6 @@
     <Content Include="assets\admin\js\screenfull.js" />
     <Content Include="assets\admin\js\scripts.js" />
     <Content Include="assets\admin\js\skycons.js" />
-    <Content Include="assets\admin\PageWiseJs\hospitalmaster.js" />
     <Content Include="assets\jquery.validate.js" />
     <Content Include="assets\shared.js" />
     <Content Include="assets\home\css\style-starter.css" />
@@ -181,7 +182,6 @@
     <Content Include="Views\Admin\DashBoard.cshtml" />
     <Content Include="Views\Admin\HospitalMaster.cshtml" />
     <Content Include="Views\Admin\DoctorMaster.cshtml" />
-    <Content Include="Views\Admin\TestMaster.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
