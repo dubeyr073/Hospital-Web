@@ -93,6 +93,8 @@
   <ItemGroup>
     <Content Include="assets\admin\PageWiseJs\appointment.js" />
     <Content Include="assets\admin\PageWiseJs\masterpages.js" />
+    <Content Include="assets\admin\PageWiseJs\doctormaster.js" />
+    <Content Include="assets\admin\PageWiseJs\TestMaster.js" />
     <Content Include="assets\common.js" />
     <Content Include="assets\admin\css\bootstrap.min.css" />
     <Content Include="assets\admin\css\custom.css" />
@@ -147,6 +149,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Admin\TestMaster.cs" />
     <Compile Include="Models\CBL\DBManager.cs" />
     <Compile Include="Models\ViewModel\TestMaster.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -180,10 +183,6 @@
     <Content Include="Views\Admin\DashBoard.cshtml" />
     <Content Include="Views\Admin\HospitalMaster.cshtml" />
     <Content Include="Views\Admin\DoctorMaster.cshtml" />
-    <Content Include="Views\Admin\DepartmentMaster.cshtml" />
-    <Content Include="Views\Admin\CreateOPDAppointment.cshtml" />
-    <Content Include="Views\Admin\AppointmentLists.cshtml" />
-    <Content Include="Views\Admin\_OPDAppointment.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
