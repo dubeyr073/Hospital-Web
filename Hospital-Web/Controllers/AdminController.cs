@@ -327,7 +327,7 @@ namespace Hospital_Web.Controllers
             {
                 ObjTestMaster.TestName = Convert.ToString(Request.Form["TestName"]);
                 ObjTestMaster.Charge = Convert.ToInt32(Request.Form["Charge"]);
-                ObjTestMaster.IsDiscriptive = Convert.ToInt32(Request.Form["IsDescription"]);
+                ObjTestMaster.IsDiscriptive = Convert.ToInt32(Request.Form["IsDescription"] == "on" ? true:false);
                 ObjTestMaster.Description = Convert.ToString(Request.Form["Description"]);
                 if (ObjTestMaster.SaveRecord())
                 {
@@ -335,7 +335,7 @@ namespace Hospital_Web.Controllers
                     ViewBag.TestId = ObjTestMaster.TestID; ;
                     Session.Add("ObjTestMaster", ObjTestMaster);
                 }
-                {
+                else{
                     ViewBag.Msg = "Record Not Saved";
                     ViewBag.TestId = 0;
                 }
@@ -349,8 +349,9 @@ namespace Hospital_Web.Controllers
             TestMaster ObjTestMaster = new TestMaster();
             if (Session["ObjTestMaster"] != null)
             {               
-                ViewBag.TestId = ObjTestMaster.TestID; ;
+                
                 ObjTestMaster = (TestMaster)Session["ObjTestMaster"];
+                ViewBag.TestId = ObjTestMaster.TestID;
             }
             else
             {
@@ -371,7 +372,13 @@ namespace Hospital_Web.Controllers
                 ViewBag.TestId = ObjTestMaster.TestID; ;
                 Session.Add("ObjTestMaster", ObjTestMaster);
             }
+            else
+            {
+                ViewBag.Msg = "Record Not Saved";
+                ViewBag.TestId = 0;
+            }
             ViewBag.ObjTestMaster = ObjTestMaster;
+            ViewBag.TestMasterDetail = ObjTestMasterDetail;
             return View("~/Views/Admin/TestMaster.cshtml");
         }
     }
