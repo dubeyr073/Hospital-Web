@@ -32,13 +32,13 @@
                     <input type="hidden" name="TestId" id="TestId" value="@ViewBag.TestId" />
                     <div class="col-md-6 form-group">
                         Test Name :
-                        <input type="text" name="TestName" id="TestName" class="form-control" placeholder="Enter Test Name" required />
+                        <input type="text" name="TestName" id="TestName" class="form-control"  placeholder="Enter Test Name" required />
                     </div>
                     <div class="col-md-6 form-group">
                         Charge : <input type="number" name="Charge" id="Charge" class="form-control" placeholder="Enter Charge" required />
                     </div>
                     <div class="col-md-12 form-group">
-                        <input type="checkbox" value=" IsDescription" name="IsDescription" id="IsDescription" class="form-control" />
+                        <input type="checkbox" name="IsDescription" id="IsDescription" class="form-control" />
                     </div>
                     <div class="col-md-12 form-group">
                         Description :
@@ -52,7 +52,7 @@
                 }
             </div>
             <div class="blank-page">
-                @using (Html.BeginForm("ManageTestMaster", "admin", FormMethod.Post, new { enctype = "multipart/form-data", @id = "manage-testdetailes-form" }))
+                @using (Html.BeginForm("ManageTestMasterDetail", "admin", FormMethod.Post, new { enctype = "multipart/form-data", @id = "manage-testdetailes-form" }))
                 {
                     <input type="hidden" name="TestDetailID" id="TestId" value="0" />
                     <div class="col-md-12 form-group">
