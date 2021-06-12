@@ -55,7 +55,7 @@ namespace Hospital_Web.Models.Admin
             object obj = DBManager.ExecuteDataTableWithParamiter("TestMaster_DeleteRecord", CommandType.StoredProcedure,  oPara);
             return obj.ToString();
         }
-        public DataTable BloodTestMaster_SelecteRecord()
+        public DataTable TestMaster_SelecteRecord()
         {
             List<SqlParameter> oPara = new List<SqlParameter>();
             oPara.Add(new SqlParameter("@TestID", this.TestID));
@@ -98,10 +98,12 @@ namespace Hospital_Web.Models.Admin
         {
             List<SqlParameter> oPara = new List<SqlParameter>();
             oPara.Add(new SqlParameter("@TestMasterID", PTestMasterID));
-            oPara.Add(new SqlParameter("@TransationDetailID", TransationDetailID));
+            oPara.Add(new SqlParameter("@TestDetailID", TransationDetailID));
 
-            DataTable dt = DBManager.ExecuteDataTableWithParamiter("TestDetailMaster_GetRecord", CommandType.StoredProcedure,  oPara);
+            DataTable dt = DBManager.ExecuteDataTableWithParamiter("TestMasterDetail_GetRecord", CommandType.StoredProcedure,  oPara);
             return dt;
         }
     }
+
+    
 }
