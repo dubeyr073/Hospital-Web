@@ -15,6 +15,8 @@ namespace Hospital_Web.Models.Admin
         public decimal Charge;
         public string Description;
         public int IsDiscriptive;
+        public string Message;
+        public string Status;
         public List<TestMasterDetail> ObjTestMasterDetail;
         public TestMaster()
         {
@@ -23,6 +25,8 @@ namespace Hospital_Web.Models.Admin
             Charge = 0;           
             Description = "";           
             IsDiscriptive = 0;
+            Message = "";
+            Status = "";
             ObjTestMasterDetail = new List<TestMasterDetail>();
         }
         public bool SaveRecord()

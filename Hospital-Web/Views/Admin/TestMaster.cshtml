@@ -2,15 +2,35 @@
 @{
     ViewBag.Title = "Admin Profile";
     Layout = "~/Views/Shared/Admin/_Layout.cshtml";
-    <script src="~/assets/admin/PageWiseJs/TestMaster.js"></script>
+    @*<script src="~/assets/admin/PageWiseJs/TestMaster.js"></script>*@
 }
-
 <script>
     $(document).ready(function () {
-        hpldm.doctorMasterOnLoad();
+        $("#btnSave").click(function (e) {
+            var testHeadData = {
+                TestId: $('#TestId').val(),
+                TestName: $('#TestName').val(),
+                Charge: $('#Charge').val(),
+                IsDescription: $('#IsDescription').val(),
+                Description: $('#Description').val()
+            };
+            hplc.ajaxCall("POST", "/admin/managetestmaster", testHeadData, "text", function (result) {
+                var response = JSON.parse(result);
+                if (response.Status == 'done') {
+                    $('#TestId').val(response.TestID)
+                    $('#msg').html(response.Message)
+                    $('#btnSave').hide();
+                    $('#TestMasterDetailContainer').removeClass("hidden");
+                }
+                else {
+                    $('#TestId').val("0")
+                    $('#btnSave').sho();
+                    $('#TestMasterDetailContainer').addClass("hidden");
+                }
+            });
+        });
     });
 </script>
-
 <div id="page-wrapper" class="gray-bg dashbard-1">
     <div class="content-main">
         <!--banner-->
@@ -25,60 +45,59 @@
         <!--content-->
         <div class="blank">
             <div class="blank-page">
-                @using (Html.BeginForm("ManageTestMaster", "admin", FormMethod.Post, new { enctype = "multipart/form-data", @id = "manage-test-form" }))
-                {
-                    <div class="col-lg-12"><p style="color:#ef0f44;text-align:center">@ViewBag.Msg</p></div>
+                <form id="frmTestHead" novalidate="novalidate">
+                    <div class="col-lg-12"><p style="color:#ef0f44; text-align:center" id="msg"></p></div>
                     <div class="clearfix"></div>
-                    <input type="hidden" name="TestId" id="TestId" value="@ViewBag.TestId" />
-                    <div class="col-md-6 form-group">
+                    <input type="hidden" name="TestId" id="TestId" autocomplete="off" value="0" />
+                    <div class="col-md-4 form-group">
                         Test Name :
-                        <input type="text" name="TestName" id="TestName" class="form-control"  placeholder="Enter Test Name" required />
+                        <input type="text" name="TestName" id="TestName" autocomplete="off" class="form-control" placeholder="Enter Test Name" required />
                     </div>
-                    <div class="col-md-6 form-group">
-                        Charge : <input type="number" name="Charge" id="Charge" class="form-control" placeholder="Enter Charge" required />
+                    <div class="col-md-4 form-group">
+                        Charge : <input type="number" name="Charge" id="Charge" autocomplete="off" class="form-control" placeholder="Enter Charge" required />
                     </div>
-                    <div class="col-md-12 form-group">
-                        <input type="checkbox" name="IsDescription" id="IsDescription" class="form-control" />
+                    <div class="col-md-4 form-group">
+                        Is Description : <input type="checkbox" name="IsDescription" id="IsDescription" class="form-control" />
                     </div>
                     <div class="col-md-12 form-group">
                         Description :
-                        <input type="text" name="Description" id="Description" class="form-control" placeholder="Enter Description" />
+                        <input type="text" name="Description" id="Description" class="form-control" autocomplete="off" placeholder="Enter Description" />
                     </div>
-                   
-                    <div class="col-lg-4 form-group">
+
+                    <div class="col-lg-12 form-group">
                         <br />
-                        <button type="submit"  name="btnSubmit" id="btnSubmit" class="btn btn-primary">Submit</button>
+                        <button type="button" id="btnSave" class="btn btn-primary float-right">Submit</button>
                     </div>
-                }
+                </form>
             </div>
-            <div class="blank-page">
+            <div class="blank-page hidden" id="TestMasterDetailContainer">
                 @using (Html.BeginForm("ManageTestMasterDetail", "admin", FormMethod.Post, new { enctype = "multipart/form-data", @id = "manage-testdetailes-form" }))
                 {
                     <input type="hidden" name="TestDetailID" id="TestId" value="0" />
-                    <div class="col-md-12 form-group">
+                    <div class="col-md-4 form-group">
                         Field Name :
                         <input type="text" name="FieldName" id="FieldName" class="form-control" placeholder="Enter Field Name" required />
                     </div>
-                    <div class="col-md-12 form-group">
+                    <div class="col-md-4 form-group">
                         Field Default Value :
                         <input type="text" name="FieldDefaultValue" id="FieldDefaultValue" class="form-control" placeholder="Enter Default Value" required />
                     </div>
-                    <div class="col-md-12 form-group">
+                    <div class="col-md-4 form-group">
                         Head Name :
-                        <input type="number" name="HeadName" id="HeadName" class="form-control" placeholder="Enter Head Name" />
+                        <input type="text" name="HeadName" id="HeadName" class="form-control" placeholder="Enter Head Name" />
                     </div>
-                    <div class="col-md-12 form-group">
+                    <div class="col-md-4 form-group">
                         Unit :
                         <input type="text" name="Unit" id="Unit" class="form-control" placeholder="Enter Unit" />
                     </div>
-                    <div class="col-lg-4 form-group">
+                    <div class="col-lg-12 form-group">
                         <br />
-                        <button type="submit" name="btnAdd" id="btnAdd" class="btn btn-primary">Add</button>
+                        <button type="submit" name="btnAdd" id="btnAdd" class="btn btn-primary float-right">Add</button>
                     </div>
                 }
             </div>
-            <div class="blank-page">
-                <div id="TestmasterList"></div>
+            <div class="blank-page" hidden>
+
             </div>
         </div>
         <!--//content-->

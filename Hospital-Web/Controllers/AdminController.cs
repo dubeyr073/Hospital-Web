@@ -331,17 +331,17 @@ namespace Hospital_Web.Controllers
                 ObjTestMaster.Description = Convert.ToString(Request.Form["Description"]);
                 if (ObjTestMaster.SaveRecord())
                 {
-                    ViewBag.Msg = "Record Saved";
-                    ViewBag.TestId = ObjTestMaster.TestID; ;
+                    ObjTestMaster.Message = "Record Saved";
+                    ObjTestMaster.Status = "done";
                     Session.Add("ObjTestMaster", ObjTestMaster);
                 }
                 else{
-                    ViewBag.Msg = "Record Not Saved";
-                    ViewBag.TestId = 0;
+                    ObjTestMaster.Status = "error";
+                    ObjTestMaster.Message = "Record Not Saved";
                 }
                 ViewBag.ObjTestMaster = ObjTestMaster;
             }
-            return View("~/Views/Admin/TestMaster.cshtml");
+            return Content(JsonConvert.SerializeObject(ObjTestMaster));
         }
 
         public ActionResult ManageTestMasterDetail()
