@@ -15,7 +15,9 @@
                 Description: $('#Description').val()
             };
             hplc.ajaxCall("POST", "/admin/managetestmaster", testHeadData, "text", function (result) {
+                debugger;
                 var response = JSON.parse(result);
+                debugger;
                 if (response.Status == 'done') {
                     $('#TestId').val(response.TestID)
                     $('#msg').html(response.Message)
@@ -26,6 +28,64 @@
                     $('#TestId').val("0")
                     $('#btnSave').sho();
                     $('#TestMasterDetailContainer').addClass("hidden");
+                }
+            });
+        });
+        //Save TestDetail
+        $("#btnTestDetail").click(function (e) {
+            debugger;
+            var testDetail = {
+                TestDetailID: $('#TestDetailID').val(),
+                FieldName: $('#FieldName').val(),
+                FieldDefaultValue: $('#FieldDefaultValue').val(),
+                HeadName: $('#HeadName').val(),
+                Unit: $('#Unit').val()
+            };
+            hplc.ajaxCall("POST", "/admin/ManageTestMasterDetail", testDetail, "text", function (result) {
+                debugger;
+                var response = JSON.parse(result);
+                debugger;
+                if (response === "ERROR") {
+
+                } else {
+                    if (response.Status === 'SUCCESS') {
+                        debugger;
+                        //Reset Form
+                        $('#TestDetailID').val("0");
+                        $('#FieldName').val("");
+                        $('#FieldDefaultValue').val("");
+                        $('#HeadName').val("");
+                        $('#Unit').val("");
+                        if (response.tmdList != "null") {
+                            var fields = [
+                                { name: "TestDetailID", css: "hidden", },
+                                { name: "TestMasterID", css: "hidden", },
+                                { name: "FieldName", type: "text", title: "Field Name", sorting: true, filtering: true, width: 50 },
+                                { name: "FieldDefaultValue", type: "text", title: "Field", sorting: true, filtering: false, width: 50 },
+                                { name: "HeadName", type: "text", title: "Head Name", sorting: true, filtering: false, width: 50 },
+                                { name: "Unit", type: "text", title: "Unit", sorting: true, filtering: false, width: 50 },
+                            ];
+                            var options = {
+                                filtering: true,
+                                editing: true,
+                                sorting: true,
+                                paging: true,
+                                autoload: true,
+                                controller: {
+                                    tmdList: response.tmdList,
+                                    loadData: function (filter) {
+                                        return $.grep(this.tmdList, function (tmdList) {
+                                            return (!filter.FieldName || FieldName.FieldName.toLowerCase().indexOf(filter.FieldName.toLowerCase()) > -1);
+                                        });
+                                    }
+                                },
+                                fields: fields
+                            };
+                            $.extend(options, hplc.grid_options);
+                            $("#tmdList").jsGrid(options);
+                            hplc.filteOnKeyPress("#tmdList");
+                        }
+                    }
                 }
             });
         });
@@ -71,9 +131,10 @@
                 </form>
             </div>
             <div class="blank-page hidden" id="TestMasterDetailContainer">
-                @using (Html.BeginForm("ManageTestMasterDetail", "admin", FormMethod.Post, new { enctype = "multipart/form-data", @id = "manage-testdetailes-form" }))
-                {
-                    <input type="hidden" name="TestDetailID" id="TestId" value="0" />
+                @*@using (Html.BeginForm("ManageTestMasterDetail", "admin", FormMethod.Post, new { enctype = "multipart/form-data", @id = "manage-testdetailes-form" }))
+                    {*@
+                <form id="frmTestDetail" novalidate="novalidate">
+                    <input type="hidden" name="TestDetailID" id="TestDetailID" value="0" />
                     <div class="col-md-4 form-group">
                         Field Name :
                         <input type="text" name="FieldName" id="FieldName" class="form-control" placeholder="Enter Field Name" required />
@@ -92,12 +153,13 @@
                     </div>
                     <div class="col-lg-12 form-group">
                         <br />
-                        <button type="submit" name="btnAdd" id="btnAdd" class="btn btn-primary float-right">Add</button>
+                        <button type="submit" name="btnTestDetail" id="btnTestDetail" class="btn btn-primary float-right">Add</button>
                     </div>
-                }
+                    @* }*@
+                </form>
             </div>
-            <div class="blank-page" hidden>
-
+            <div class="blank-page">
+                <div id="tmdList"></div>
             </div>
         </div>
         <!--//content-->

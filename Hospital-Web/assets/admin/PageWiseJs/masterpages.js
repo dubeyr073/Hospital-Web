@@ -185,7 +185,7 @@
     return scope;
 })(hplm || {});
 
-$(function () {
-    $("#manage-opd-appointment").validate({
-    });
-});
+//$(function () {
+//    $("#manage-opd-appointment").validate({
+//    });
+//});

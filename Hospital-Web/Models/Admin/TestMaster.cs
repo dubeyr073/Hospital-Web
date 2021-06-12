@@ -89,8 +89,8 @@ namespace Hospital_Web.Models.Admin
                 oPara.Add(new SqlParameter("@StatusID", this.StatusID));
                 oPara.Add(new SqlParameter("@HeadName", this.HeadName));
                 oPara.Add(new SqlParameter("@Unit", this.Unit));                                                                      
-                object obj = DBManager.ExecuteDataTableWithParamiter("TestMasterDetail_SaveRecord", CommandType.StoredProcedure,  oPara);
-                return Convert.ToInt32(obj);
+                DataTable dt = DBManager.ExecuteDataTableWithParamiter("TestMasterDetail_SaveRecord", CommandType.StoredProcedure,  oPara);
+                return Convert.ToInt32(dt.Rows[0]["ID"]);
             }
             catch (Exception Ex)
             {
