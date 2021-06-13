@@ -387,8 +387,8 @@ namespace Hospital_Web.Controllers
                     }
                     dynamic tmdDetailList = new ExpandoObject();
                     tmdDetailList.tmdList = tmdList.Count > 0 ? tmdList : null;
-                    tmdDetailList.Status = "SUCCESS";
-                    tmdDetailList.Msg = "Record Added";
+                    tmdDetailList.Status = "done";
+                    tmdDetailList.Message = "Record Added";
                     tmdDetailList.TestID = ObjTestMaster.TestID;
                     Session.Add("ObjTestMaster", ObjTestMaster);
                     return Content(JsonConvert.SerializeObject(tmdDetailList));
@@ -398,8 +398,8 @@ namespace Hospital_Web.Controllers
                     dynamic tmdDetailList = new ExpandoObject();
                     tmdDetailList.ObjTestMaster = ObjTestMaster;
                     tmdDetailList.TestMasterDetail = ObjTestMasterDetail;
-                    tmdDetailList.Status = "ERROR";
-                    tmdDetailList.Msg = "Record Not Saved";
+                    tmdDetailList.Status = "error";
+                    tmdDetailList.Message = "Record Not Saved";
                     tmdDetailList.TestID = 0;
                     return Content(JsonConvert.SerializeObject(tmdDetailList));
                 }

@@ -26,14 +26,13 @@
                 }
                 else {
                     $('#TestId').val("0")
-                    $('#btnSave').sho();
+                    $('#btnSave').show();
                     $('#TestMasterDetailContainer').addClass("hidden");
                 }
             });
         });
         //Save TestDetail
         $("#btnTestDetail").click(function (e) {
-            debugger;
             var testDetail = {
                 TestDetailID: $('#TestDetailID').val(),
                 FieldName: $('#FieldName').val(),
@@ -42,14 +41,13 @@
                 Unit: $('#Unit').val()
             };
             hplc.ajaxCall("POST", "/admin/ManageTestMasterDetail", testDetail, "text", function (result) {
-                debugger;
                 var response = JSON.parse(result);
-                debugger;
-                if (response === "ERROR") {
-
-                } else {
-                    if (response.Status === 'SUCCESS') {
-                        debugger;
+                if (response === "error") {
+                    $('#detailaddedmsg').html(response.Message)
+                }
+                else {
+                    if (response.Status === 'done') {
+                        $('#detailaddedmsg').html(response.Message)
                         //Reset Form
                         $('#TestDetailID').val("0");
                         $('#FieldName').val("");
@@ -67,7 +65,7 @@
                             ];
                             var options = {
                                 filtering: true,
-                                editing: true,
+                                editing: false,
                                 sorting: true,
                                 paging: true,
                                 autoload: true,
@@ -75,7 +73,7 @@
                                     tmdList: response.tmdList,
                                     loadData: function (filter) {
                                         return $.grep(this.tmdList, function (tmdList) {
-                                            return (!filter.FieldName || FieldName.FieldName.toLowerCase().indexOf(filter.FieldName.toLowerCase()) > -1);
+                                            return (!filter.FieldName || tmdList.FieldName.toLowerCase().indexOf(filter.FieldName.toLowerCase()) > -1);
                                         });
                                     }
                                 },
@@ -134,6 +132,7 @@
                 @*@using (Html.BeginForm("ManageTestMasterDetail", "admin", FormMethod.Post, new { enctype = "multipart/form-data", @id = "manage-testdetailes-form" }))
                     {*@
                 <form id="frmTestDetail" novalidate="novalidate">
+                    <div class="col-lg-12"><p style="color:#ef0f44; text-align:center" id="detailaddedmsg"></p></div>
                     <input type="hidden" name="TestDetailID" id="TestDetailID" value="0" />
                     <div class="col-md-4 form-group">
                         Field Name :
@@ -153,7 +152,7 @@
                     </div>
                     <div class="col-lg-12 form-group">
                         <br />
-                        <button type="submit" name="btnTestDetail" id="btnTestDetail" class="btn btn-primary float-right">Add</button>
+                        <button type="button" name="btnTestDetail" id="btnTestDetail" class="btn btn-primary float-right">Add</button>
                     </div>
                     @* }*@
                 </form>
