@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewBag.Title = "Admin Profile";
+    Layout = "~/Views/Shared/Admin/_Layout.cshtml";
+    @*<script src="~/assets/admin/PageWiseJs/TestMaster.js"></script>*@
+}
+    <script>
+        $(document).ready(function () {
+            hplm.Testmasterdataonload();
+        });
+    </script>
+    <div id="page-wrapper" class="gray-bg dashbard-1">
+        <div class="content-main">
+            <!--banner-->
+            <div class="banner">
+                <div>
+                    <h2>
+                        <a href="/home/dashboard">Test Master </a>
+                        <i class="fa fa-angle-right"></i>
+                        <span>Data</span>
+                    </h2>
+                </div>
+                <div><form id="Head" novalidate="novalidate">@Html.ActionLink("New", "TestMaster", new { controller = "Admin" }) </form></div>
+            </div>
+            <div>
+                <div> </div>
+            </div>
+            <!--//banner-->
+            <!--content-->
+            <div class="blank">
+                <div class="blank-page">
+                    <div id="TestMasterList"></div>
+                </div>
+            </div>
+            <!--//content-->
+            <!---->
+        </div>
+        <div class="clearfix"> </div>
+    </div>

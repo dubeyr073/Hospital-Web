@@ -315,10 +315,20 @@ namespace Hospital_Web.Controllers
             return View("~/Views/Admin/CreateOPDAppointment.cshtml");
         }
 
-        public ActionResult TestMaster()
+        public ActionResult TestMaster(int TestId=0)
         {
-            ViewBag.Msg = "";
-            ViewBag.TestId = 0;
+            if (TestId == 0)
+            {
+                Session.Add("ObjTestMaster", "");
+                ViewBag.Msg = "";
+                ViewBag.TestId = 0;
+               
+            }
+            else
+            {
+                //code for TestMasterRecord
+                
+            }
             return View("~/Views/Admin/TestMaster.cshtml");
         }
         public ActionResult ManageTestMaster()
@@ -408,6 +418,33 @@ namespace Hospital_Web.Controllers
             {
                 return Content(JsonConvert.SerializeObject("ERROR"));
             }
+        }
+
+        public ActionResult TestMasterData(string type = "view")
+        {
+            if (type == "view")
+            {
+                return View("~/Views/Admin/TestMasterData.cshtml");
+            }
+            else
+            {
+                return TestMasterList();
+            }
+        }
+        private ContentResult TestMasterList()
+        {
+            DataSet ds = new DataSet();
+            try
+            {
+                TestMaster ObjTestMaster = new TestMaster();
+                ds.Tables.Add(ObjTestMaster.TestMaster_SelecteRecord());
+                ds.Tables[0].TableName = "TestMasterLists";
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return Content(JsonConvert.SerializeObject(ds));
         }
     }
 }

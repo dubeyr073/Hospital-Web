@@ -66,6 +66,7 @@ namespace Hospital_Web.Models.Admin
             DataTable dt = DBManager.ExecuteDataTableWithParamiter("TestMaster_SelectRecord", CommandType.StoredProcedure,  oPara);
             return dt;
         }
+
     }
     class TestMasterDetail
     {

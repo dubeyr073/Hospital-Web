@@ -182,6 +182,57 @@
             };
         });
     };
+    scope.Testmasterdataonload = function () {
+        hplc.ajaxCall("GET", "/admin/TestMasterData?type=list", {}, "text", function (d) {
+            var TestMasterList = JSON.parse(d);
+            if (TestMasterList !== "null") {
+                var fields = [
+                    { name: "TestID", css: "hidden", },
+                    { name: "TestName", type: "text", title: "Test Name", sorting: true, filtering: true, width: 50  },
+                    { name: "Charge",  title: "Amount", sorting: true, filtering: true, width: 50  },
+                    { name: "IsDiscription", title: "Type", sorting: true, filtering: true, width: 50  },                  
+                ];
+                var options = {
+                    filtering: true,
+                    editing: true,
+                    sorting: true,
+                    paging: true,
+                    autoload: true,
+                    rowClick: function (args) {
+                        editTestMaster("Edit", args.item)
+                    },
+                    controller: {
+                        TestLists: TestMasterList.TestMasterLists,
+                        loadData: function (filter) {
+                            return $.grep(this.TestLists, function (testList) {
+                                return (!filter.TestName || testList.TestName.toLowerCase().indexOf(filter.TestName.toLowerCase()) > -1);
+                            });
+                        }
+                    },
+                    fields: fields
+                };
+                $.extend(options, hplc.grid_options);
+                $("#TestMasterList").jsGrid(options);
+                hplc.filteOnKeyPress("#TestMasterList");
+            }
+
+            var formSubmitHandler = $.noop;
+            //formSubmitHandler = function () {
+            //    var TestMasterLists = {};
+            //    manageHospitalMaster(TestMasterLists)
+            //};
+            var editTestMaster = function (dilogType, TestMaster) {
+                if (TestMaster.TestID > 0) {
+                    var ProcessingUrl = 'TestMaster?TestId=' + TestMaster.TestID;
+                    window.open(ProcessingUrl, '_self');
+                }
+                else {
+                   
+                }
+            };
+        });
+    };
+
     return scope;
 })(hplm || {});
 
