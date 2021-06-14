@@ -1,6 +1,8 @@
-﻿
+﻿@using Hospital_Web.Models.Admin;
 @{
+
     ViewBag.Title = "Admin Profile";
+    var ObjTestMaster = ViewBag.ObjTestMaster as TestMaster;
     Layout = "~/Views/Shared/Admin/_Layout.cshtml";
     @*<script src="~/assets/admin/PageWiseJs/TestMaster.js"></script>*@
 }
@@ -23,6 +25,7 @@
                     $('#msg').html(response.Message)
                     $('#btnSave').hide();
                     $('#TestMasterDetailContainer').removeClass("hidden");
+                    ItemGrid(response.ObjTestMasterDetail);
                 }
                 else {
                     $('#TestId').val("0")
@@ -55,7 +58,14 @@
                         $('#HeadName').val("");
                         $('#Unit').val("");
                         if (response.tmdList != "null") {
-                            var fields = [
+                            ItemGrid(response.tmdList);
+                        }
+                    }
+                }
+            });
+        });
+        function ItemGrid(responselist) {
+            var fields = [
                                 { name: "TestDetailID", css: "hidden", },
                                 { name: "TestMasterID", css: "hidden", },
                                 { name: "FieldName", type: "text", title: "Field Name", sorting: true, filtering: true, width: 50 },
@@ -70,7 +80,7 @@
                                 paging: true,
                                 autoload: true,
                                 controller: {
-                                    tmdList: response.tmdList,
+                                    tmdList: responselist,
                                     loadData: function (filter) {
                                         return $.grep(this.tmdList, function (tmdList) {
                                             return (!filter.FieldName || tmdList.FieldName.toLowerCase().indexOf(filter.FieldName.toLowerCase()) > -1);
@@ -82,13 +92,8 @@
                             $.extend(options, hplc.grid_options);
                             $("#tmdList").jsGrid(options);
                             hplc.filteOnKeyPress("#tmdList");
-                        }
-                    }
-                }
-            });
-        });
-        $("#btnResetAll").click(function (e)
-        {
+        }
+        $("#btnResetAll").click(function (e) {
             window.open('TestMaster', '_self'); return false;
         });
     });
@@ -97,87 +102,86 @@
     <div class="content-main">
         <!--banner-->
         <div class="banner">
-            
-                <h2>
-                    <a href="/home/dashboard">Test Master</a>
-                    <i class="fa fa-angle-right"></i>
-                    <span>Create Test</span>
-                </h2>
-            
+
+            <h2>
+                <a href="/home/dashboard">Test Master</a>
+                <i class="fa fa-angle-right"></i>
+                <span>Create Test</span>
+            </h2>
+
         </div>
-        <div >
-            <div > </div>
+        <div>
+            <div> </div>
         </div>
-            <!--//banner-->
-            <!--content-->
-            <div class="blank">
-                <div class="blank-page">
-                    <form id="frmTestHead" novalidate="novalidate">
-                        <div class="col-lg-12"><p style="color:#ef0f44; text-align:center" id="msg"></p></div>
+        <!--//banner-->
+        <!--content-->
+        <div class="blank">
+            <div class="blank-page">
+                <form id="frmTestHead" novalidate="novalidate">
+                    <div class="col-lg-12"><p style="color:#ef0f44; text-align:center" id="msg"></p></div>
 
-                        <div class="clearfix"></div>
+                    <div class="clearfix"></div>
 
-                        <input type="hidden" name="TestId" id="TestId" autocomplete="off" value="0" />
-                        <div class="col-md-4 form-group">
-                            Test Name :
-                            <input type="text" name="TestName" id="TestName" autocomplete="off" class="form-control" placeholder="Enter Test Name" required />
-                        </div>
-                        <div class="col-md-4 form-group">
-                            Charge : <input type="number" name="Charge" id="Charge" autocomplete="off" class="form-control" placeholder="Enter Charge" required />
-                        </div>
-                        <div class="col-md-4 form-group">
-                            Is Description : <input type="checkbox" name="IsDescription" id="IsDescription" class="form-control" />
-                        </div>
-                        <div class="col-md-12 form-group">
-                            Description :
-                            <input type="text" name="Description" id="Description" class="form-control" autocomplete="off" placeholder="Enter Description" />
-                        </div>
+                    <input type="hidden" name="TestId" id="TestId"  autocomplete="off" value="@(ObjTestMaster.TestID)" />
+                    <div class="col-md-4 form-group">
+                        Test Name :
+                        <input type="text" name="TestName" id="TestName" autocomplete="off" class="form-control" placeholder="Enter Test Name" value= "@(ObjTestMaster.TestName =="" ? "" : ObjTestMaster.TestName)" required />
 
-                        <div class="col-lg-12 form-group">
-                            <br />
-                            <button type="button" name="btnResetAll" id="btnResetAll" class="btn btn-primary float-right">Reset All</button>&nbsp;
-                            <button type="button" id="btnSave" class="btn btn-primary float-right">Submit</button>
-                        </div>
-                    </form>
-                </div>
-                <div class="blank-page hidden" id="TestMasterDetailContainer">
-                    @*@using (Html.BeginForm("ManageTestMasterDetail", "admin", FormMethod.Post, new { enctype = "multipart/form-data", @id = "manage-testdetailes-form" }))
-                {*@
-                    <form id="frmTestDetail" novalidate="novalidate">
-                        <div class="col-lg-12"><p style="color:#ef0f44; text-align:center" id="detailaddedmsg"></p></div>
-                        <input type="hidden" name="TestDetailID" id="TestDetailID" value="0" />
-                        <div class="col-md-4 form-group">
-                            Field Name :
-                            <input type="text" name="FieldName" id="FieldName" class="form-control" placeholder="Enter Field Name" required />
-                        </div>
-                        <div class="col-md-4 form-group">
-                            Field Default Value :
-                            <input type="text" name="FieldDefaultValue" id="FieldDefaultValue" class="form-control" placeholder="Enter Default Value" required />
-                        </div>
-                        <div class="col-md-4 form-group">
-                            Head Name :
-                            <input type="text" name="HeadName" id="HeadName" class="form-control" placeholder="Enter Head Name" />
-                        </div>
-                        <div class="col-md-4 form-group">
-                            Unit :
-                            <input type="text" name="Unit" id="Unit" class="form-control" placeholder="Enter Unit" />
-                        </div>
-                        <div class="col-lg-12 form-group">
-                            <br />
-                            
-                           
-                            <button type="button" name="btnTestDetail" id="btnTestDetail" class="btn btn-primary float-right">Add</button>
+                    </div>
 
-                        </div>
-                        @* }*@
-                    </form>
-                </div>
-                <div class="blank-page">
-                    <div id="tmdList"></div>
-                </div>
+                    <div class="col-md-4 form-group">
+                        Charge : <input type="number" name="Charge" id="Charge" autocomplete="off" class="form-control" placeholder="Enter Charge" value="@(ObjTestMaster.Charge == 0 ? "":ObjTestMaster.Charge.ToString())" required />
+                    </div>
+                    <div class="col-md-4 form-group">
+                        Is Description : <input type="checkbox" name="IsDescription" id="IsDescription" @(ObjTestMaster.IsDiscriptive==1?"checked":"") class="form-control" />
+                    </div>
+                    <div class="col-md-12 form-group">
+                        Description :
+                        <input type="text" name="Description" id="Description" class="form-control" autocomplete="off" value="@(ObjTestMaster.Description == ""?"":ObjTestMaster.Description)" placeholder="Enter Description" />
+                    </div>
+
+                    <div class="col-lg-12 form-group">
+                        <br />
+                        <button type="button" name="btnResetAll" id="btnResetAll" class="btn btn-primary float-right">Reset All</button>&nbsp;
+                        <button type="button" id="btnSave" class="btn btn-primary float-right">@(ObjTestMaster.TestID>0?"Update":"Submit")</button>
+                    </div>
+                </form>
             </div>
-            <!--//content-->
-            <!---->
+            <div class="blank-page hidden" id="TestMasterDetailContainer">
+              
+                <form id="frmTestDetail" novalidate="novalidate">
+                    <div class="col-lg-12"><p style="color:#ef0f44; text-align:center" id="detailaddedmsg"></p></div>
+                    <input type="hidden" name="TestDetailID" id="TestDetailID" value="0" />
+                    <div class="col-md-4 form-group">
+                        Field Name :
+                        <input type="text" name="FieldName" id="FieldName" class="form-control" placeholder="Enter Field Name" required />
+                    </div>
+                    <div class="col-md-4 form-group">
+                        Field Default Value :
+                        <input type="text" name="FieldDefaultValue" id="FieldDefaultValue" class="form-control" placeholder="Enter Default Value" required />
+                    </div>
+                    <div class="col-md-4 form-group">
+                        Head Name :
+                        <input type="text" name="HeadName" id="HeadName" class="form-control" placeholder="Enter Head Name" />
+                    </div>
+                    <div class="col-md-4 form-group">
+                        Unit :
+                        <input type="text" name="Unit" id="Unit" class="form-control" placeholder="Enter Unit" />
+                    </div>
+                    <div class="col-lg-12 form-group">
+                        <br />
+                        <button type="button" name="btnTestDetail" id="btnTestDetail" class="btn btn-primary float-right">Add</button>
+
+                    </div>
+                   
+                </form>
+            </div>
+            <div class="blank-page">
+                <div id="tmdList"></div>
+            </div>
         </div>
+        <!--//content-->
+        <!---->
+    </div>
     <div class="clearfix"> </div>
 </div>

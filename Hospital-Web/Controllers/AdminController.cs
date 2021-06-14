@@ -317,6 +317,7 @@ namespace Hospital_Web.Controllers
 
         public ActionResult TestMaster(int TestId=0)
         {
+            TestMaster ObjTestMaster = new TestMaster();
             if (TestId == 0)
             {
                 Session.Add("ObjTestMaster", "");
@@ -325,25 +326,28 @@ namespace Hospital_Web.Controllers
                
             }
             else
-            {
-                //code for TestMasterRecord
-                
+            {                
+                ObjTestMaster.TestID = TestId;
+                ObjTestMaster.SelecteRecordBYID();             
             }
+            ViewBag.ObjTestMaster = ObjTestMaster;
             return View("~/Views/Admin/TestMaster.cshtml");
         }
         public ActionResult ManageTestMaster()
         {
             TestMaster ObjTestMaster = new TestMaster();
-            if (Convert.ToInt32(Request.Form["TestId"]) == 0)
-            {
+           
+                ObjTestMaster.TestID = Convert.ToInt32(Request.Form["TestId"]);
                 ObjTestMaster.TestName = Convert.ToString(Request.Form["TestName"]);
-                ObjTestMaster.Charge = Convert.ToInt32(Request.Form["Charge"]);
+                ObjTestMaster.Charge = Convert.ToDecimal(Request.Form["Charge"]);
                 ObjTestMaster.IsDiscriptive = Convert.ToInt32(Request.Form["IsDescription"] == "on" ? true : false);
                 ObjTestMaster.Description = Convert.ToString(Request.Form["Description"]);
                 if (ObjTestMaster.SaveRecord())
                 {
                     ObjTestMaster.Message = "Record Saved";
                     ObjTestMaster.Status = "done";
+                    var Objlist =  GetTestDetailed(ObjTestMaster.TestID);
+                    ObjTestMaster.ObjTestMasterDetail = Objlist.tmdList;
                     Session.Add("ObjTestMaster", ObjTestMaster);
                 }
                 else
@@ -352,7 +356,6 @@ namespace Hospital_Web.Controllers
                     ObjTestMaster.Message = "Record Not Saved";
                 }
                 ViewBag.ObjTestMaster = ObjTestMaster;
-            }
             return Content(JsonConvert.SerializeObject(ObjTestMaster));
         }
 
@@ -380,28 +383,9 @@ namespace Hospital_Web.Controllers
                 ObjTestMasterDetail.Unit = Convert.ToString(Request.Form["Unit"]);
                 ObjTestMasterDetail.TestDetailID = ObjTestMasterDetail.TestMasterDetail_SaveRecord();
                 if (ObjTestMasterDetail.TestDetailID > 0)
-                {
-                    DataTable dt = ObjTestMasterDetail.TestMasterDetail_SelecteRecord(ObjTestMasterDetail.TestMasterID, ObjTestMasterDetail.TestDetailID);
-                    List<TestMasterDetail> tmdList = new List<TestMasterDetail>();
-                    foreach (DataRow dr in dt.Rows)
-                    {
-                        TestMasterDetail tmd = new TestMasterDetail();
-                        tmd.TestDetailID = Convert.ToInt32(dr["TestDetailID"]);
-                        tmd.TestMasterID = Convert.ToInt32(dr["TestMasterID"]);
-                        tmd.FieldName = Convert.ToString(dr["FieldName"]);
-                        tmd.FieldDefaultValue = Convert.ToString(dr["FieldDefaultValue"]);
-                        tmd.StatusID = Convert.ToInt32(dr["StatusID"]);
-                        tmd.HeadName = Convert.ToString(dr["HeadName"]);
-                        tmd.Unit = Convert.ToString(dr["Unit"]);
-                        tmdList.Add(tmd);
-                    }
-                    dynamic tmdDetailList = new ExpandoObject();
-                    tmdDetailList.tmdList = tmdList.Count > 0 ? tmdList : null;
-                    tmdDetailList.Status = "done";
-                    tmdDetailList.Message = "Record Added";
-                    tmdDetailList.TestID = ObjTestMaster.TestID;
+                {                   
                     Session.Add("ObjTestMaster", ObjTestMaster);
-                    return Content(JsonConvert.SerializeObject(tmdDetailList));
+                    return Content(JsonConvert.SerializeObject(GetTestDetailed(ObjTestMaster.TestID)));
                 }
                 else
                 {
@@ -418,6 +402,29 @@ namespace Hospital_Web.Controllers
             {
                 return Content(JsonConvert.SerializeObject("ERROR"));
             }
+        }
+        public dynamic GetTestDetailed(int TestID)
+        {
+            DataTable dt = new TestMasterDetail().TestMasterDetail_SelecteRecord(TestID, 0);
+            List<TestMasterDetail> tmdList = new List<TestMasterDetail>();
+            foreach (DataRow dr in dt.Rows)
+            {
+                TestMasterDetail tmd = new TestMasterDetail();
+                tmd.TestDetailID = Convert.ToInt32(dr["TestDetailID"]);
+                tmd.TestMasterID = Convert.ToInt32(dr["TestMasterID"]);
+                tmd.FieldName = Convert.ToString(dr["FieldName"]);
+                tmd.FieldDefaultValue = Convert.ToString(dr["FieldDefaultValue"]);
+                tmd.StatusID = Convert.ToInt32(dr["StatusID"]);
+                tmd.HeadName = Convert.ToString(dr["HeadName"]);
+                tmd.Unit = Convert.ToString(dr["Unit"]);
+                tmdList.Add(tmd);
+            }
+            dynamic tmdDetailList = new ExpandoObject();
+            tmdDetailList.tmdList = tmdList.Count > 0 ? tmdList : null;
+            tmdDetailList.Status = "done";
+            tmdDetailList.Message = "Record Added";
+            tmdDetailList.TestID = TestID;
+            return tmdDetailList;
         }
 
         public ActionResult TestMasterData(string type = "view")

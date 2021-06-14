@@ -8,7 +8,7 @@ using System.Web;
 namespace Hospital_Web.Models.Admin
 {
     
-    class TestMaster
+   public class TestMaster
     {
         public int TestID;
         public string TestName;
@@ -66,9 +66,20 @@ namespace Hospital_Web.Models.Admin
             DataTable dt = DBManager.ExecuteDataTableWithParamiter("TestMaster_SelectRecord", CommandType.StoredProcedure,  oPara);
             return dt;
         }
+        public void SelecteRecordBYID()
+        {
+          DataTable DT = TestMaster_SelecteRecord();
+            foreach (DataRow DR in DT.Rows)
+            {
+                TestName = DR["TestName"].ToString();
+                Charge = Convert.ToDecimal(DR["Charge"]);
+                IsDiscriptive = Convert.ToInt32(DR["IsDiscription"]);
+                Description = Convert.ToString(DR["Description"]);
+            }
+        }
 
     }
-    class TestMasterDetail
+   public class TestMasterDetail
     {
         public int TestDetailID;
         public int TestMasterID;
