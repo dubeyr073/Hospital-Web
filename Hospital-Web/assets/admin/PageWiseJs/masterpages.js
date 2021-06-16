@@ -8,6 +8,17 @@
                     { name: "HospitalId", css: "hidden", },
                     { name: "HospitalName", type: "text", title: "Hospital Name", sorting: false, filtering: true, width: 50 },
                     { name: "DepartmentName", type: "text", title: "Department Name", sorting: true, filtering: true, width: 50 },
+                    {
+                        width: 20,
+                        itemTemplate: function (value, args) {
+                            var $customeEditButton = $('<a class="btn btn-primary"><i class="fa fa-edit"></i></a>')
+                                .click(function (e) {
+                                    editDepartmentMaster('Edit', args);
+                                    return false;
+                                });
+                            return $("<div class='display-flex'></div>").append($customeEditButton);
+                        }
+                    }
                 ];
                 var options = {
                     filtering: true,
@@ -15,9 +26,6 @@
                     sorting: true,
                     paging: true,
                     autoload: true,
-                    rowClick: function (args) {
-                        editDepartmentMaster("Edit", args.item)
-                    },
                     controller: {
                         departmentLists: departmentMasterList.DepartmentLists,
                         loadData: function (filter) {
@@ -66,6 +74,17 @@
                     { name: "Address", type: "text", title: "Address", sorting: false, filtering: false, width: 50 },
                     { name: "ContactNumber", type: "text", title: "Contact Number", sorting: false, filtering: false, width: 50 },
                     { name: "EmailId", type: "text", title: "Email Id", sorting: false, filtering: false, width: 50 },
+                    {
+                        width: 20,
+                        itemTemplate: function (value, args) {
+                            var $customeEditButton = $('<a class="btn btn-primary"><i class="fa fa-edit"></i></a>')
+                                .click(function (e) {
+                                    editHospitalMaster('Edit', args);
+                                    return false;
+                                });
+                            return $("<div class='display-flex'></div>").append($customeEditButton);
+                        }
+                    }
                 ];
                 var options = {
                     filtering: true,
@@ -73,9 +92,6 @@
                     sorting: true,
                     paging: true,
                     autoload: true,
-                    rowClick: function (args) {
-                        editHospitalMaster("Edit", args.item)
-                    },
                     controller: {
                         hospitalLists: hospitalMasterList.HospitalLists,
                         loadData: function (filter) {
@@ -131,6 +147,17 @@
                     { name: "Website", css: "hidden", },
                     { name: "Description", css: "hidden", },
                     { name: "Commission", css: "hidden", },
+                    {
+                        width: 20,
+                        itemTemplate: function (value, args) {
+                            var $customeEditButton = $('<a class="btn btn-primary"><i class="fa fa-edit"></i></a>')
+                                .click(function (e) {
+                                    editDoctorMaster('Edit', args);
+                                    return false;
+                                });
+                            return $("<div class='display-flex'></div>").append($customeEditButton);
+                        }
+                    }
                 ];
                 var options = {
                     filtering: true,
@@ -138,9 +165,6 @@
                     sorting: true,
                     paging: true,
                     autoload: true,
-                    rowClick: function (args) {
-                        editDoctorMaster("Edit", args.item)
-                    },
                     controller: {
                         doctorLists: doctorMasterList.DoctorLists,
                         loadData: function (filter) {
@@ -182,15 +206,28 @@
             };
         });
     };
-    scope.Testmasterdataonload = function () {
-        hplc.ajaxCall("GET", "/admin/TestMasterData?type=list", {}, "text", function (d) {
+
+    scope.testMasterDataOnload = function () {
+        hplc.ajaxCall("GET", "/admin/testmasterdata?type=list", {}, "text", function (d) {
             var TestMasterList = JSON.parse(d);
             if (TestMasterList !== "null") {
                 var fields = [
                     { name: "TestID", css: "hidden", },
                     { name: "TestName", type: "text", title: "Test Name", sorting: true, filtering: true, width: 50  },
                     { name: "Charge",  title: "Amount", sorting: true, filtering: true, width: 50  },
-                    { name: "IsDiscription", title: "Type", sorting: true, filtering: true, width: 50  },                  
+                    { name: "IsDiscription", title: "Type", sorting: true, filtering: true, width: 50 },   
+                    {
+                        title:"Action",
+                        width: 20,
+                        itemTemplate: function (value, args) {
+                            var $customeEditButton = $('<a class="btn btn-primary"><i class="fa fa-edit"></i></a>')
+                                .click(function (e) {
+                                    editTestMaster('Edit', args);
+                                    return false;
+                                });
+                            return $("<div class='display-flex'></div>").append($customeEditButton);
+                        }
+                    }
                 ];
                 var options = {
                     filtering: true,
@@ -198,9 +235,6 @@
                     sorting: true,
                     paging: true,
                     autoload: true,
-                    rowClick: function (args) {
-                        editTestMaster("Edit", args.item)
-                    },
                     controller: {
                         TestLists: TestMasterList.TestMasterLists,
                         loadData: function (filter) {
@@ -216,11 +250,6 @@
                 hplc.filteOnKeyPress("#TestMasterList");
             }
 
-            var formSubmitHandler = $.noop;
-            //formSubmitHandler = function () {
-            //    var TestMasterLists = {};
-            //    manageHospitalMaster(TestMasterLists)
-            //};
             var editTestMaster = function (dilogType, TestMaster) {
                 if (TestMaster.TestID > 0) {
                     var ProcessingUrl = 'TestMaster?TestId=' + TestMaster.TestID;

@@ -340,7 +340,7 @@ namespace Hospital_Web.Controllers
                 ObjTestMaster.TestID = Convert.ToInt32(Request.Form["TestId"]);
                 ObjTestMaster.TestName = Convert.ToString(Request.Form["TestName"]);
                 ObjTestMaster.Charge = Convert.ToDecimal(Request.Form["Charge"]);
-                ObjTestMaster.IsDiscriptive = Convert.ToInt32(Request.Form["IsDescription"] == "on" ? true : false);
+                ObjTestMaster.IsDiscriptive = Convert.ToInt32(Request.Form["IsDescription"]);
                 ObjTestMaster.Description = Convert.ToString(Request.Form["Description"]);
                 if (ObjTestMaster.SaveRecord())
                 {
@@ -377,6 +377,7 @@ namespace Hospital_Web.Controllers
                 }
                 TestMasterDetail ObjTestMasterDetail = new TestMasterDetail();
                 ObjTestMasterDetail.TestMasterID = ObjTestMaster.TestID;
+                ObjTestMasterDetail.TestDetailID = Convert.ToInt32(Request.Form["TestDetailID"]);
                 ObjTestMasterDetail.HeadName = Convert.ToString(Request.Form["HeadName"]);
                 ObjTestMasterDetail.FieldName = Convert.ToString(Request.Form["FieldName"]);
                 ObjTestMasterDetail.FieldDefaultValue = Convert.ToString(Request.Form["FieldDefaultValue"]);

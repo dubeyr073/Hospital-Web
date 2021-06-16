@@ -19,7 +19,7 @@
         width: "100%",
         height: "auto",
         filtering: true,
-        editing: true,
+        editing: false,
         sorting: true,
         autoload: true,
         pageSize: 15,
