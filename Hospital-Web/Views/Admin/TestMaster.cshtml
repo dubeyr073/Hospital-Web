@@ -18,7 +18,9 @@
                 TestName: $('#TestName').val(),
                 Charge: $('#Charge').val(),
                 IsDescription: $('#IsDescription').prop('checked') ? 1 : 0,
-                Description: CKEDITOR.instances['Description'].getData()//$('textarea#Description').val()
+                Description: JSON.stringify({
+                    'Html': CKEDITOR.instances['Description'].getData()
+                })//$('textarea#Description').val()
             };
             hplc.ajaxCall("POST", "/admin/managetestmaster", testHeadData, "text", function (result) {
                 var response = JSON.parse(result);
