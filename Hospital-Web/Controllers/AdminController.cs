@@ -331,6 +331,8 @@ namespace Hospital_Web.Controllers
                 ObjTestMaster.SelecteRecordBYID();             
             }
             ViewBag.ObjTestMaster = ObjTestMaster;
+            string LinkURL = Request.Url.GetLeftPart(UriPartial.Authority) + Url.Content("~");
+            ViewBag.ImageUploadURL = LinkURL + "CkediterImageUpload.ashx";
             return View("~/Views/Admin/TestMaster.cshtml");
         }
         public ActionResult ManageTestMaster()

@@ -93,7 +93,6 @@
   <ItemGroup>
     <Content Include="assets\admin\PageWiseJs\appointment.js" />
     <Content Include="assets\admin\PageWiseJs\masterpages.js" />
-    <Content Include="assets\admin\PageWiseJs\doctormaster.js" />
     <Content Include="assets\admin\PageWiseJs\TestMaster.js" />
     <Content Include="assets\common.js" />
     <Content Include="assets\admin\css\bootstrap.min.css" />
@@ -493,6 +492,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="CkediterImageUpload.ashx.cs">
+      <DependentUpon>CkediterImageUpload.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -500,6 +502,8 @@
     </Compile>
     <Compile Include="Models\Admin\TestMaster.cs" />
     <Compile Include="Models\CBL\DBManager.cs" />
+    <Compile Include="Models\Log\CNFException.cs" />
+    <Compile Include="Models\Log\Logging.cs" />
     <Compile Include="Models\ViewModel\TestMaster.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -526,6 +530,7 @@
     <Content Include="ckeditor\plugins\wsc\README.md" />
     <Content Include="ckeditor\README.md" />
     <Content Include="ckeditor\skins\moono-lisa\readme.md" />
+    <Content Include="CkediterImageUpload.ashx" />
     <None Include="packages.config" />
     <Content Include="Views\Shared\Admin\Error.cshtml" />
     <Content Include="Views\Shared\Admin\_Footer.cshtml" />
