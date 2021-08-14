@@ -335,15 +335,15 @@ namespace Hospital_Web.Controllers
             ViewBag.ImageUploadURL = LinkURL + "CkediterImageUpload.ashx";
             return View("~/Views/Admin/TestMaster.cshtml");
         }
-        public ActionResult ManageTestMaster()
+        public ActionResult ManageTestMaster(string TestID, string TestName, string Charge, string IsDescription, string Description)
         {
             TestMaster ObjTestMaster = new TestMaster();
-           
-                ObjTestMaster.TestID = Convert.ToInt32(Request.Form["TestId"]);
-                ObjTestMaster.TestName = Convert.ToString(Request.Form["TestName"]);
-                ObjTestMaster.Charge = Convert.ToDecimal(Request.Form["Charge"]);
-                ObjTestMaster.IsDiscriptive = Convert.ToInt32(Request.Form["IsDescription"]);
-                ObjTestMaster.Description = Convert.ToString(Request.Form["Description"]);
+
+            ObjTestMaster.TestID = Convert.ToInt32(TestID); //Convert.ToInt32(Request.Form["TestId"]);
+            ObjTestMaster.TestName = Convert.ToString(TestName);  // Convert.ToString(Request.Form["TestName"]);
+            ObjTestMaster.Charge = Convert.ToDecimal(Charge);//Convert.ToDecimal(Request.Form["Charge"]);
+            ObjTestMaster.IsDiscriptive = Convert.ToInt32(IsDescription);//Convert.ToInt32(Request.Form["IsDescription"]);
+            ObjTestMaster.Description = Convert.ToString(Description); //Convert.ToString(Request.Form["Description"]);
                 if (ObjTestMaster.SaveRecord())
                 {
                     ObjTestMaster.Message = "Record Saved";
@@ -360,7 +360,12 @@ namespace Hospital_Web.Controllers
                 ViewBag.ObjTestMaster = ObjTestMaster;
             return Content(JsonConvert.SerializeObject(ObjTestMaster));
         }
-
+        
+        [HttpPost]
+        public JsonResult ActionName(string TestID, string TestName,string Charge,string IsDiscriptive,string Description)
+        {
+            return Json("output", JsonRequestBehavior.AllowGet);
+        }
         public ActionResult ManageTestMasterDetail()
         {
             try

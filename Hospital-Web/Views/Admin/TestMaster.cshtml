@@ -18,25 +18,71 @@
                 TestName: $('#TestName').val(),
                 Charge: $('#Charge').val(),
                 IsDescription: $('#IsDescription').prop('checked') ? 1 : 0,
-                Description: JSON.stringify({
-                    'Html': CKEDITOR.instances['Description'].getData()
-                })//$('textarea#Description').val()
+                Description: CKEDITOR.instances['Description'].getData()
+                //Description: JSON.stringify({
+                //    'Html': CKEDITOR.instances['Description'].getData()
+                //})//$('textarea#Description').val()
             };
-            hplc.ajaxCall("POST", "/admin/managetestmaster", testHeadData, "text", function (result) {
-                var response = JSON.parse(result);
-                if (response.Status == 'done') {
-                    $('#TestId').val(response.TestID)
-                    $('#msg').html(response.Message)
-                    $('#btnSave').hide();
-                    $('#TestMasterDetailContainer').removeClass("hidden");
-                    ItemGrid(response.ObjTestMasterDetail);
-                }
-                else {
-                    $('#TestId').val("0")
-                    $('#btnSave').show();
-                    $('#TestMasterDetailContainer').addClass("hidden");
+            $.ajax({
+                type: "POST",
+                url: "/admin/managetestmaster",
+                data: JSON.stringify({ TestId: testHeadData.TestId, TestName: testHeadData.TestName, Charge: testHeadData.Charge, IsDescription: testHeadData.IsDescription, Description: testHeadData.Description }),
+                cache: false,
+                dataType: "json",
+                contentType: 'application/json',
+                success: function (response) {
+                   // var response = d;
+                    if (response.Status == 'done') {
+                        $('#TestId').val(response.TestID)
+                        $('#msg').html(response.Message)
+                        $('#btnSave').hide();
+                        $('#TestMasterDetailContainer').removeClass("hidden");
+                        ItemGrid(response.ObjTestMasterDetail);
+                    }
+                    else {
+                        $('#TestId').val("0")
+                        $('#btnSave').show();
+                        $('#TestMasterDetailContainer').addClass("hidden");
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    f("");
                 }
             });
+            //hplc.ajaxCall("POST", "/admin/managetestmaster", testHeadData, "text", function (result) {
+            //    var response = JSON.parse(result);
+            //    if (response.Status == 'done') {
+            //        $('#TestId').val(response.TestID)
+            //        $('#msg').html(response.Message)
+            //        $('#btnSave').hide();
+            //        $('#TestMasterDetailContainer').removeClass("hidden");
+            //        ItemGrid(response.ObjTestMasterDetail);
+            //    }
+            //    else {
+            //        $('#TestId').val("0")
+            //        $('#btnSave').show();
+            //        $('#TestMasterDetailContainer').addClass("hidden");
+            //    }
+            //});
+            //var valueArray = [];
+            //valueArray.push(testHeadData.TestId);
+            //valueArray.push(testHeadData.TestName);
+            //valueArray.push(testHeadData.Charge);
+            //valueArray.push(testHeadData.IsDescription);
+            //valueArray.push(testHeadData.Description);
+
+            //$.ajax({
+            //    url: "/Admin/ActionName",
+            //    type: "POST",
+            //    data: JSON.stringify({ TestId: testHeadData.TestId, TestName: testHeadData.TestName, Charge: testHeadData.Charge, IsDescription: testHeadData.IsDescription, Description: testHeadData.Description}),
+            //    cache: false,
+            //    dataType: "json",
+            //    contentType: 'application/json',
+            //    success: function (data) {
+
+            //    }
+            //});
+            
         });
         //Save TestDetail
         $("#btnTestDetail").click(function (e) {
