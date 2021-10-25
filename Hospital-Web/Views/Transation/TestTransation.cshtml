@@ -1,0 +1,186 @@
+﻿@using Hospital_Web.Models.Admin;
+@using System.Data;
+@model Hospital_Web.Models.Admin.TestTransationLine
+@{
+
+    ViewBag.Title = "Trantion Test";
+    //var ObjTestMaster = ViewBag.ObjTestMaster as TestMaster;
+    Layout = "~/Views/Shared/Admin/_Layout.cshtml";
+    @*<script src="~/assets/admin/PageWiseJs/TestMaster.js"></script>*@
+}
+<script src="~/ckeditor/ckeditor.js"></script>
+<script src="~/ckeditor/adapters/jquery.js"></script>
+
+<script>
+    $(document).ready(function () {
+        hplc.ajaxCall("GET", "/Transation/GetTransationTestDetail?TransationID="+ @Model.TransationID.ToString(), {}, "text", function (d) {
+            var appointmentList = JSON.parse(d);
+            if (appointmentList !== "null") {
+                var fields = [
+                    { name: "TransationDetailsID", css: "hidden", },
+                    { name: "TransationID", css: "hidden", },
+                    { name: "TestName", type: "text", title: "Test Name", editing: false, sorting: false, filtering: true, width: 50 },
+                    { name: "TestID", css: "hidden", },
+                    { name: "Amount", type: "text", title: "Amount", editing: false, sorting: false, filtering: false, width: 50 },
+                    { name: "Remark", type: "text", title: "Remark", editing: false, sorting: true, filtering: false, width: 50 },
+                    {
+                        width: 20,
+                        itemTemplate: function (value, args) {
+                            var $customeEditButton = $('<a class="btn btn-primary"><i class="fa fa-edit"></i></a>')
+                                .click(function (e) {
+                                    updateAppointment('Edit', args);
+                                    return false;
+                                });
+                            return $("<div class='display-flex'></div>").append($customeEditButton);
+                        }
+                    }
+                ];
+                var options = {
+                    autoload: true,
+                    controller: {
+                        AppointmentLists: appointmentList,
+                        loadData: function (filter) {
+                            return $.grep(this.AppointmentLists, function (appointmentList) {
+                                return (!filter.TestName || appointmentList.TestName.toLowerCase().indexOf(filter.TestName.toLowerCase()) > -1);
+                            });
+                        }
+                    },
+                    fields: fields
+                };
+                $.extend(options, hplc.grid_options);
+                $("#appointmentList").jsGrid(options);
+                hplc.filteOnKeyPress("#appointmentList");
+            }
+            var formSubmitHandler = $.noop;
+            formSubmitHandler = function () {
+            };
+
+            //var updateAppointment = function (dilogType, OPDAppointment) {
+            //    if (OPDAppointment.AppointmentId > 0) {
+            //        $('#AppointmentModal').modal('show');
+            //        $("#btnSubmit").text("Update")
+            //        $("#AppointmentId").val(OPDAppointment.AppointmentId);
+            //        $("#AppointmentNumber").val(OPDAppointment.AppointmentNumber);
+            //        $("#name").val(OPDAppointment.Name);
+            //        $("#age").val(OPDAppointment.Age);
+            //        $("#contactnumber").val(OPDAppointment.ContactNumber);
+            //        $("#email").val(OPDAppointment.EmailId);
+            //        $("#appointmentdate").val(OPDAppointment.AppointmentDate);
+            //        $("#appointmenttime").val(OPDAppointment.AppointmentTime);
+            //        $("#Address").html(OPDAppointment.Address);
+            //        $("#description").html(OPDAppointment.Description);
+            //    }
+            //    else {
+            //        $("#btnSubmit").text("Submit")
+            //    }
+            //};
+        });
+        $("#btnResetAll").click(function (e) {
+            window.open('TestMaster', '_self'); return false;
+        });
+        $("#TransationDetail_TestID").change(onSelectChange);
+    });
+    function onSelectChange() {
+        var transationdetail_testid = $("#TransationDetail_TestID option:selected")
+        hplc.ajaxCall("GET", "/Transation/GetTestData?TransationID=" + transationdetail_testid.value, {}, "text", function (d) {
+            var TestData = JSON.parse(d);
+            $("#TransationDetail_Amount").val("0");
+        });
+        //var newBook = selectedBook.text();
+        //var selectedTitle = $("#Titles option:selected");
+        //var newTitle = selectedTitle.text();
+        //$.post("/Home/UpdateAll", { newBook: newBook, newTitle: newTitle });
+
+    }
+</script>
+<div id="page-wrapper" class="gray-bg dashbard-1">
+    <div class="content-main">
+        <!--banner-->
+        <div class="banner">
+
+            <h2>
+                <a href="/home/dashboard">Test Master</a>
+                <i class="fa fa-angle-right"></i>
+                <span>Create Test</span>
+            </h2>
+
+        </div>
+        <div>
+            <div> </div>
+        </div>
+        <!--//banner-->
+        <!--content-->
+        <div class="blank">
+            @using (Html.BeginForm("SaveTransationTest", "Transation", FormMethod.Post, new { enctype = "multipart/form-data", @id = "frmtransationTestHead" }))
+            {
+            <div class="blank-page">
+                @*<form id="frmTestHead" novalidate="novalidate">*@
+
+                <div class="col-lg-12"><p style="color:#ef0f44; text-align:center" id="msg"></p></div>
+                <div class="clearfix"></div>
+                @Html.HiddenFor(m => m.TransationID)
+            <div class="col-md-4 form-group">
+                @Html.TextBoxFor(m => m.Transation_No, htmlAttributes: new { @placeholder = "Name", @required = "required", @class = "form-control" })
+            </div>
+                <div class="col-md-4 form-group">
+                    @Html.TextBoxFor(m => m.Name, htmlAttributes: new { @placeholder = "Name", @required = "required", @class = "form-control" })
+                </div>
+
+                <div class="col-md-4 form-group">
+                    @Html.TextBoxFor(m => m.Age, htmlAttributes: new { @placeholder = "Age", @required = "required", @class = "form-control" })
+                </div>
+                <div class="col-md-4 form-group">
+                    @Html.TextBoxFor(m => m.Sex, htmlAttributes: new { @placeholder = "Sex", @required = "required", @class = "form-control" })
+                </div>
+                <div class="col-md-4 form-group">
+                    @Html.TextBoxFor(m => m.Transation_Data, htmlAttributes: new { @type = "date", @required = "required", @class = "form-control" })
+                </div>
+                    <div class="col-md-4 form-group">
+                        @Html.TextBoxFor(m => m.MobileNumber, htmlAttributes: new { @placeholder = "MobileNumber", @required = "required", @class = "form-control" })
+                    </div>
+                    <div class="col-md-4 form-group">
+                        @Html.DropDownListFor(M => M.HospitalID, new SelectList(Model.HospitalData, "Value", "Text"), "Select Hospital", htmlAttributes: new { @class = "form-control" })
+                    </div>
+                    <div class="col-md-4 form-group">
+                        @Html.DropDownListFor(M => M.DoctorID, new SelectList(Model.DoctorData, "Value", "Text"), "Select Docter", htmlAttributes: new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="blank-page" id="TestMasterDetailContainer">
+                    @*<form id="frmTestDetail" novalidate="novalidate">*@
+                    <div class="col-lg-12"><p style="color:#ef0f44; text-align:center" id="detailaddedmsg"></p></div>
+                    @Html.HiddenFor(m => m.TransationDetail.TransationDetailsID)
+                    @Html.HiddenFor(m => m.TransationDetail.TransationID)
+                    <div class="col-md-4 form-group">
+                        @Html.DropDownListFor(M => M.TransationDetail.TestID, new SelectList(Model.TransationDetail.TestData, "Value", "Text"), "Select Text", htmlAttributes: new { @required = "required", @class = "form-control" })
+                    </div>
+                    <div class="col-md-4 form-group">
+                        @Html.TextBoxFor(m => m.TransationDetail.Amount, htmlAttributes: new { @placeholder = "Amount", @required = "required", @class = "form-control" })
+                    </div>
+                    <div class="col-md-4 form-group">
+
+                    </div>
+                    <div class="col-md-4 form-group">
+
+                    </div>
+                    @*<div class="col-lg-12 form-group">
+                <br />
+                <button type="button" name="btnTestDetail" id="btnTestDetail" class="btn btn-primary float-right">Add</button>
+            </div>*@
+
+                    @*</form>*@
+                    <div class="col-lg-12 form-group">
+                        <br />
+                        @*<button type="button" name="btnResetAll" id="btnResetAll" class="btn btn-primary float-right" style="margin-left:10px">Reset All</button>&nbsp;*@
+                        <button type="submit" id="btnSaveR" class="btn btn-primary float-right">@(Model.TransationID > 0 ? "Update" : "Submit")</button>
+                    </div>
+                </div>
+                }
+                <div class="blank-page">
+                    <div id="appointmentList"></div>
+                </div>
+            </div>
+        <!--//content-->
+        <!---->
+    </div>
+    <div class="clearfix"> </div>
+</div>

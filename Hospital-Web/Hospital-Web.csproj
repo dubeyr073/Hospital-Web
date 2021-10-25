@@ -497,9 +497,12 @@
     </Compile>
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\TransationController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CBL\Comman_Control.cs" />
+    <Compile Include="Models\Admin\TestBooking.cs" />
     <Compile Include="Models\Admin\TestMaster.cs" />
     <Compile Include="Models\CBL\DBManager.cs" />
     <Compile Include="Models\Log\CNFException.cs" />
@@ -548,6 +551,8 @@
     <Content Include="Views\Admin\DoctorMaster.cshtml" />
     <Content Include="Views\Admin\TestMaster.cshtml" />
     <Content Include="Views\Admin\TestMasterData.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Transation\TestTransation.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -41,14 +41,14 @@ namespace Hospital.BL.MasterDetails
             oPara.Add(new SqlParameter("@Discount", this.Discount));
             oPara.Add(new SqlParameter("@Commission", this.Commission));
 
-            object obj = SQLHelper.ExecuteScalar(CommandType.StoredProcedure, "BloodTestMaster_SaveRecord", oPara);
+            object obj = DBManager.ExecuteScalar("BloodTestMaster_SaveRecord",CommandType.StoredProcedure, oPara);
             return obj.ToString();
         }
         public string BloodTestMaster_DeleteRecord()
         {
             List<IDbDataParameter> oPara = new List<IDbDataParameter>();
             oPara.Add(new SqlParameter("@BloodTestID", this.BloodTestID));
-            object obj = SQLHelper.ExecuteScalar(CommandType.StoredProcedure, "BloodTestMaster_DeleteRecord", oPara);
+            object obj = DBManager.ExecuteScalar(CommandType.StoredProcedure, "BloodTestMaster_DeleteRecord", oPara);
             return obj.ToString();
         }
         public DataTable BloodTestMaster_SelecteRecord()
