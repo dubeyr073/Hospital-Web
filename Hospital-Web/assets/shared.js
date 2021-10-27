@@ -100,3 +100,12 @@ $(function () {
 
 });
 
+var Grid = (function (Create) {
+    Create.JSGrid = function (data, f) {
+        if (data != "") {
+            f(data);
+        }
+
+    };
+})
+

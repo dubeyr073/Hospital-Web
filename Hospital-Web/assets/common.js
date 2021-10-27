@@ -41,7 +41,11 @@
         });
         $("tr:has(td i.inactive)", $(grid)).addClass("inactive");
     };
-
+    scope.JSGrid = function (data, f) {
+       // if (data != "") {
+            f(data);
+       // };
+    };
     return scope;
 })(hplc || {});
 
@@ -53,3 +57,8 @@ function exportInExcel(elem) {
     elem.setAttribute("download", "export.xls"); // Choose the file name
     return false;
 }
+
+var Grid = (function (Create) {
+   
+    return Create;
+})

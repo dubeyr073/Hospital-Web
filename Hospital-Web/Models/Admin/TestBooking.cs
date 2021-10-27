@@ -36,9 +36,7 @@ namespace Hospital_Web.Models.Admin
 			HospitalData = new SelectList(DDLValueFromDB.GETDATAFROMDB("HospitalID", "HospitalName", "HospitalMaster",  "And Status=1"), "Id", "Value");
 			TransationDetail = new TestTransationDetails();
 			Transation_No = DateTime.Now.ToString("yyyyMMddHHmmssffffff");
-			Transation_Data = DateTime.Now;
 			Remark = "";
-			//TransactionList = TransationDetail.TestTransationDetails_Get();
 		}
 		public int TestTransationLine_SaveRecord()
 		{
@@ -57,7 +55,19 @@ namespace Hospital_Web.Models.Admin
 			TransationID = Convert.ToInt32(obj);
 			return Convert.ToInt32(obj);
 		}
-		
+
+		public DataTable TestTransationLine_GetRecord(string ToDate,string MobileNumber)
+        {
+			List<SqlParameter> SqlParameters = new List<SqlParameter>();
+			if(ToDate != "")
+				SqlParameters.Add(new SqlParameter("@ToDate", (ToDate == "" ? null : ToDate)));
+			if (MobileNumber != "")
+				SqlParameters.Add(new SqlParameter("@MobileNumber", MobileNumber));
+			DataTable dt = DBManager.ExecuteDataTableWithParamiter("TestTransation_SelectRecord", CommandType.StoredProcedure, SqlParameters);
+			return dt;
+		}
+
+
 	}
     public class TestTransationDetails
     {
@@ -95,4 +105,6 @@ namespace Hospital_Web.Models.Admin
 		}
 		//string Remark;
 	}
+
+	
 }

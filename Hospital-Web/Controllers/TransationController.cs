@@ -51,5 +51,21 @@ namespace Hospital_Web.Controllers
             ObjTestMaster.TestID = TestID;
             return Content(JsonConvert.SerializeObject(ObjTestMaster.TestMaster_SelecteRecord()));
         }
+        public ActionResult TestTransationDataIndex()
+        {
+            TestTransationLine ObjTestTransationLine = new TestTransationLine();
+            return View("~/Views/Transation/TestTransationData.cshtml", ObjTestTransationLine);
+        }
+        [HttpPost]
+        public ActionResult GetTestTransationData(TestTransationLine ObjTestTransationLine)
+        {           
+            return View("~/Views/Transation/TestTransationData.cshtml", ObjTestTransationLine);
+        }
+        
+        public ActionResult GetTestTransationDataFromJS(string Date,string MobileNumber)
+        {
+            return Content(JsonConvert.SerializeObject(new TestTransationLine().TestTransationLine_GetRecord(Date, MobileNumber)));
+            
+        }
     }
 }

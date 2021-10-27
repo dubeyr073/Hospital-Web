@@ -553,6 +553,7 @@
     <Content Include="Views\Admin\TestMasterData.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Transation\TestTransation.cshtml" />
+    <Content Include="Views\Transation\TestTransationData.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
