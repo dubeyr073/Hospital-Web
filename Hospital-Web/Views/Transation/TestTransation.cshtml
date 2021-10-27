@@ -78,20 +78,15 @@
         $("#btnResetAll").click(function (e) {
             window.open('TestMaster', '_self'); return false;
         });
-        $("#TransationDetail_TestID").change(onSelectChange);
+        //$("#TransationDetail_TestID").change(onSelectChange);
+        $("#TransationDetail_TestID").on("change", function () {
+            hplc.ajaxCall("GET", "/Transation/GetTestData?TestID=" + $('#TransationDetail_TestID :selected').val(), {}, "text", function (d) {
+                var TestData = JSON.parse(d);
+                if (TestData.length>0)
+                    $("#TransationDetail_Amount").val(TestData[0].Charge);
+            });
+        });  
     });
-    function onSelectChange() {
-        var transationdetail_testid = $("#TransationDetail_TestID option:selected")
-        hplc.ajaxCall("GET", "/Transation/GetTestData?TransationID=" + transationdetail_testid.value, {}, "text", function (d) {
-            var TestData = JSON.parse(d);
-            $("#TransationDetail_Amount").val("0");
-        });
-        //var newBook = selectedBook.text();
-        //var selectedTitle = $("#Titles option:selected");
-        //var newTitle = selectedTitle.text();
-        //$.post("/Home/UpdateAll", { newBook: newBook, newTitle: newTitle });
-
-    }
 </script>
 <div id="page-wrapper" class="gray-bg dashbard-1">
     <div class="content-main">
@@ -118,44 +113,55 @@
 
                 <div class="col-lg-12"><p style="color:#ef0f44; text-align:center" id="msg"></p></div>
                 <div class="clearfix"></div>
-                @Html.HiddenFor(m => m.TransationID)
+
+                @Html.HiddenFor(m => m.TransationID, new { @Value = Model.TransationID })
             <div class="col-md-4 form-group">
+                Transation No
                 @Html.TextBoxFor(m => m.Transation_No, htmlAttributes: new { @placeholder = "Name", @required = "required", @class = "form-control" })
             </div>
-                <div class="col-md-4 form-group">
-                    @Html.TextBoxFor(m => m.Name, htmlAttributes: new { @placeholder = "Name", @required = "required", @class = "form-control" })
-                </div>
+            <div class="col-md-4 form-group">
+                Name
+                @Html.TextBoxFor(m => m.Name, htmlAttributes: new { @placeholder = "Name", @required = "required", @class = "form-control" })
+            </div>
 
-                <div class="col-md-4 form-group">
-                    @Html.TextBoxFor(m => m.Age, htmlAttributes: new { @placeholder = "Age", @required = "required", @class = "form-control" })
-                </div>
-                <div class="col-md-4 form-group">
-                    @Html.TextBoxFor(m => m.Sex, htmlAttributes: new { @placeholder = "Sex", @required = "required", @class = "form-control" })
-                </div>
-                <div class="col-md-4 form-group">
-                    @Html.TextBoxFor(m => m.Transation_Data, htmlAttributes: new { @type = "date", @required = "required", @class = "form-control" })
-                </div>
-                    <div class="col-md-4 form-group">
-                        @Html.TextBoxFor(m => m.MobileNumber, htmlAttributes: new { @placeholder = "MobileNumber", @required = "required", @class = "form-control" })
-                    </div>
-                    <div class="col-md-4 form-group">
-                        @Html.DropDownListFor(M => M.HospitalID, new SelectList(Model.HospitalData, "Value", "Text"), "Select Hospital", htmlAttributes: new { @class = "form-control" })
-                    </div>
-                    <div class="col-md-4 form-group">
-                        @Html.DropDownListFor(M => M.DoctorID, new SelectList(Model.DoctorData, "Value", "Text"), "Select Docter", htmlAttributes: new { @class = "form-control" })
-                    </div>
+            <div class="col-md-4 form-group">
+                Age
+                @Html.TextBoxFor(m => m.Age, htmlAttributes: new { @placeholder = "Age", @required = "required", @class = "form-control" })
+            </div>
+            <div class="col-md-4 form-group">
+                Sex
+                @Html.TextBoxFor(m => m.Sex, htmlAttributes: new { @placeholder = "Sex", @required = "required", @class = "form-control" })
+            </div>
+            <div class="col-md-4 form-group">
+                Transation Data
+                @Html.TextBoxFor(m => m.Transation_Data, htmlAttributes: new { @type = "date", @required = "required", @class = "form-control" })
+            </div>
+            <div class="col-md-4 form-group">
+                Mobile Number
+                @Html.TextBoxFor(m => m.MobileNumber, htmlAttributes: new { @placeholder = "MobileNumber", @required = "required", @class = "form-control" })
+            </div>
+            <div class="col-md-4 form-group">
+                Hospital
+                @Html.DropDownListFor(M => M.HospitalID, new SelectList(Model.HospitalData, "Value", "Text"), "Select Hospital", htmlAttributes: new { @class = "form-control" })
+            </div>
+            <div class="col-md-4 form-group">
+                Doctor
+                @Html.DropDownListFor(M => M.DoctorID, new SelectList(Model.DoctorData, "Value", "Text"), "Select Docter", htmlAttributes: new { @class = "form-control" })
+            </div>
                 </div>
                 <div class="blank-page" id="TestMasterDetailContainer">
                     @*<form id="frmTestDetail" novalidate="novalidate">*@
                     <div class="col-lg-12"><p style="color:#ef0f44; text-align:center" id="detailaddedmsg"></p></div>
                     @Html.HiddenFor(m => m.TransationDetail.TransationDetailsID)
                     @Html.HiddenFor(m => m.TransationDetail.TransationID)
-                    <div class="col-md-4 form-group">
-                        @Html.DropDownListFor(M => M.TransationDetail.TestID, new SelectList(Model.TransationDetail.TestData, "Value", "Text"), "Select Text", htmlAttributes: new { @required = "required", @class = "form-control" })
-                    </div>
-                    <div class="col-md-4 form-group">
-                        @Html.TextBoxFor(m => m.TransationDetail.Amount, htmlAttributes: new { @placeholder = "Amount", @required = "required", @class = "form-control" })
-                    </div>
+                <div class="col-md-4 form-group">
+                    Test Name
+                    @Html.DropDownListFor(M => M.TransationDetail.TestID, new SelectList(Model.TransationDetail.TestData, "Value", "Text"), "Select Text", htmlAttributes: new { @required = "required", @class = "form-control" })
+                </div>
+                <div class="col-md-4 form-group">
+                    Amount
+                    @Html.TextBoxFor(m => m.TransationDetail.Amount, htmlAttributes: new { @placeholder = "Amount", @required = "required", @class = "form-control" })
+                </div>
                     <div class="col-md-4 form-group">
 
                     </div>
